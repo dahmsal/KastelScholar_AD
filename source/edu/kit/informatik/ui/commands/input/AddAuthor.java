@@ -1,6 +1,8 @@
 package edu.kit.informatik.ui.commands.input;
 
+import edu.kit.informatik.data.Database;
 import edu.kit.informatik.ui.commands.Command;
+import edu.kit.informatik.ui.commands.parameter.AuthorParam;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
@@ -11,12 +13,17 @@ import java.util.regex.MatchResult;
 /**
  * The quit command quits the program and needs no parameters
  */
-public class Quit extends Command {
-    private static final String PATTERN = "quit";
-
+public class AddAuthor extends Command {
+    private static final String PATTERN = "add author";
+    private final List<Parameter> parameters;
     private final Session session;
+    private final Database database;
 
-    public Quit(final Session session) { this.session = session; }
+    public AddAuthor(final Session session, final Database database) {
+        this.session = session;
+        this.database = database;
+        this.parameters = List.of(new AuthorParam());
+    }
 
     @Override
     public String getPattern() {
@@ -29,12 +36,12 @@ public class Quit extends Command {
      */
     @Override
     public List<Parameter> getParams() {
-        return List.of();
+        return this.parameters;
     }
 
     @Override
     public Result exec(MatchResult matcher) {
-        this.session.quit();
+        System.out.println(matcher);
         return new Result(true);
     }
 }

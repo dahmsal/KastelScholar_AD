@@ -1,6 +1,6 @@
 package edu.kit.informatik.ui.commands;
 
-import java.lang.reflect.Parameter;
+import edu.kit.informatik.ui.commands.parameter.Parameter;
 import java.util.List;
 import java.util.regex.MatchResult;
 
