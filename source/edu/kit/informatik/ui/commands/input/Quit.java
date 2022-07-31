@@ -33,7 +33,7 @@ public class Quit extends Command {
     }
 
     @Override
-    public Result exec(MatchResult matcher) {
+    public Result exec(List<String> parameters) {
         this.session.quit();
         return new Result(true);
     }

@@ -13,6 +13,7 @@ import edu.kit.informatik.ui.session.Result;
  * @version 1.0
  */
 public abstract class Command {
+
     /**
      * get the regex-pattern of the command
      * @return a regex-pattern
@@ -29,5 +30,5 @@ public abstract class Command {
      * Execute the command and return the result of the execution
      * @return result of execution
      */
-    public abstract Result exec(MatchResult matcher);
+    public abstract Result exec(List<String> parameters);
 }
