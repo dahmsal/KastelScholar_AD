@@ -5,7 +5,7 @@ package edu.kit.informatik.ui.commands.parameter;
  * @author uppyo
  * @version 1.0
  */
-public enum Pattern {
+public enum ParameterPattern {
     /**
      * A generic String-pattern, can be string with whitespace and numbers.
      * Does not match "," or ";"
@@ -30,7 +30,7 @@ public enum Pattern {
 
     private final String pattern;
 
-    Pattern(final String pattern) {
+    ParameterPattern(final String pattern) {
         this.pattern = pattern;
     }
 

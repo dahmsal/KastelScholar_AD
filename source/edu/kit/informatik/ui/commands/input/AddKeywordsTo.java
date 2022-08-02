@@ -4,17 +4,18 @@ package edu.kit.informatik.ui.commands.input;
 import edu.kit.informatik.data.Database;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.Pattern;
+import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
+import java.util.Dictionary;
 import java.util.List;
 
 /**
  *
  */
 public class AddKeywordsTo extends Command {
-    private static final String PATTERN = "^add series";
+    private static final String PATTERN = "^add keywords to";
     private final List<Parameter> parameters;
     private final Session session;
     private final Database database;
@@ -22,11 +23,13 @@ public class AddKeywordsTo extends Command {
     public AddKeywordsTo(final Session session, final Database database) {
         this.session = session;
         this.database = database;
-        Parameter id = new Parameter.ParameterBuilder().pattern(Pattern.IDENTIFIER).build();
-        Parameter doubleDot = new Parameter.ParameterBuilder().specialPattern(":").build();
-        Parameter string = new Parameter.ParameterBuilder().pattern(Pattern.STRING).build();
-        Parameter listKeywords = new Parameter.ParameterBuilder().pattern(Pattern.LOWER_WORD).build();
-        this.parameters = List.of(string, doubleDot, listKeywords);
+        Parameter venue = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
+        Parameter listKeywords = new Parameter.ParameterBuilder()
+                .pattern(ParameterPattern.LOWER_WORD).useAsList().build();
+        Parameter idOrVenue = new Parameter.ParameterBuilder()
+                .pattern(ParameterPattern.IDENTIFIER).useAsField(List.of(listKeywords))
+                .alternativeParameterList(List.of(venue)).build();
+        this.parameters = List.of(idOrVenue);
     }
 
 
@@ -45,10 +48,11 @@ public class AddKeywordsTo extends Command {
     }
 
     @Override
-    public Result exec(List<String> parameters) {
-        for (String param: parameters
+    public Result exec(Dictionary<Parameter, Object> parameterDict) {
+        for (Parameter parameter: this.parameters
         ) {
-            System.out.println(param);
+            System.out.println(parameter.getPattern());
+            System.out.println(parameterDict.get(parameter).toString());
         }
         return new Result(true);
     }

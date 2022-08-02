@@ -1,6 +1,8 @@
 package edu.kit.informatik.ui.commands;
 
 import edu.kit.informatik.ui.commands.parameter.Parameter;
+
+import java.util.Dictionary;
 import java.util.List;
 import java.util.regex.MatchResult;
 
@@ -28,7 +30,8 @@ public abstract class Command {
 
     /**
      * Execute the command and return the result of the execution
+     * @param parameters a dictionary of parsed parameters
      * @return result of execution
      */
-    public abstract Result exec(List<String> parameters);
+    public abstract Result exec(Dictionary<Parameter, Object> parameters);
 }

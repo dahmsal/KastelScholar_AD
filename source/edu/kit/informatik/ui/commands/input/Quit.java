@@ -5,6 +5,8 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
 import edu.kit.informatik.ui.commands.parameter.Parameter;
+
+import java.util.Dictionary;
 import java.util.List;
 import java.util.regex.MatchResult;
 
@@ -33,7 +35,7 @@ public class Quit extends Command {
     }
 
     @Override
-    public Result exec(List<String> parameters) {
+    public Result exec(Dictionary<Parameter, Object> parameter) {
         this.session.quit();
         return new Result(true);
     }

@@ -4,10 +4,11 @@ package edu.kit.informatik.ui.commands.input;
 import edu.kit.informatik.data.Database;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.Pattern;
+import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
+import java.util.Dictionary;
 import java.util.List;
 
 /**
@@ -22,8 +23,8 @@ public class WrittenBy extends Command {
     public WrittenBy(final Session session, final Database database) {
         this.session = session;
         this.database = database;
-        Parameter id = new Parameter.ParameterBuilder().pattern(Pattern.IDENTIFIER).build();
-        Parameter listAuthor = new Parameter.ParameterBuilder().pattern(Pattern.NAME).useAsList().build();
+        Parameter id = new Parameter.ParameterBuilder().pattern(ParameterPattern.IDENTIFIER).build();
+        Parameter listAuthor = new Parameter.ParameterBuilder().pattern(ParameterPattern.NAME).useAsList().build();
         this.parameters = List.of(id, listAuthor);
     }
 
@@ -43,10 +44,10 @@ public class WrittenBy extends Command {
     }
 
     @Override
-    public Result exec(List<String> parameters) {
-        for (String param: parameters
+    public Result exec(Dictionary<Parameter, Object> parameterDict) {
+        for (Parameter parameter: this.parameters
         ) {
-            System.out.println(param);
+            System.out.println(parameterDict.get(parameter).toString());
         }
         return new Result(true);
     }

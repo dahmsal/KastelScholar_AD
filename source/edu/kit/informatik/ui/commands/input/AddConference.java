@@ -4,10 +4,11 @@ package edu.kit.informatik.ui.commands.input;
 import edu.kit.informatik.data.Database;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.Pattern;
+import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
+import java.util.Dictionary;
 import java.util.List;
 
 /**
@@ -22,9 +23,9 @@ public class AddConference extends Command {
     public AddConference(final Session session, final Database database) {
         this.session = session;
         this.database = database;
-        Parameter series = new Parameter.ParameterBuilder().pattern(Pattern.STRING).build();
-        Parameter year = new Parameter.ParameterBuilder().pattern(Pattern.INTEGER).build();
-        Parameter location = new Parameter.ParameterBuilder().pattern(Pattern.STRING).build();
+        Parameter series = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
+        Parameter year = new Parameter.ParameterBuilder().pattern(ParameterPattern.INTEGER).build();
+        Parameter location = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
         this.parameters = List.of(series, year, location);
     }
 
@@ -44,10 +45,10 @@ public class AddConference extends Command {
     }
 
     @Override
-    public Result exec(List<String> parameters) {
-        for (String param: parameters
+    public Result exec(Dictionary<Parameter, Object> parameterDict) {
+        for (Parameter parameter: this.parameters
         ) {
-            System.out.println(param);
+            System.out.println(parameterDict.get(parameter).toString());
         }
         return new Result(true);
     }

@@ -2,11 +2,13 @@ package edu.kit.informatik.ui.commands.input;
 
 import edu.kit.informatik.data.Database;
 import edu.kit.informatik.ui.commands.Command;
-import edu.kit.informatik.ui.commands.parameter.Pattern;
+import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
 import edu.kit.informatik.ui.commands.parameter.Parameter;
+
+import java.util.Dictionary;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class AddAuthor extends Command {
     public AddAuthor(final Session session, final Database database) {
         this.session = session;
         this.database = database;
-        Parameter author = new Parameter.ParameterBuilder().pattern(Pattern.NAME).build();
+        Parameter author = new Parameter.ParameterBuilder().pattern(ParameterPattern.NAME).useAsList().build();
         this.parameters = List.of(author);
     }
 
@@ -41,10 +43,10 @@ public class AddAuthor extends Command {
     }
 
     @Override
-    public Result exec(List<String> parameters) {
-        for (String name: parameters
-             ) {
-            System.out.println("Author Name: " + name);
+    public Result exec(Dictionary<Parameter, Object> parameterDict) {
+        for (Parameter parameter: this.parameters
+        ) {
+            System.out.println(parameterDict.get(parameter).toString());
         }
         return new Result(true);
     }
