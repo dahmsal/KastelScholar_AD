@@ -1,7 +1,7 @@
 package edu.kit.informatik.ui.Parser;
 
 import edu.kit.informatik.ui.commands.Command;
-import edu.kit.informatik.ui.session.InputException;
+import edu.kit.informatik.util.exception.InputException;
 import edu.kit.informatik.util.ObjectPair;
 
 import java.util.List;

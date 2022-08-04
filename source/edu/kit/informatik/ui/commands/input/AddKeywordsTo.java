@@ -9,6 +9,7 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
 
 import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -19,17 +20,15 @@ public class AddKeywordsTo extends Command {
     private final List<Parameter> parameters;
     private final Session session;
     private final Database database;
+    private final Parameter listKeywords = new Parameter.ParameterBuilder()
+            .pattern(ParameterPattern.LOWER_WORD).useAsList().build();
+    private final Parameter idOrVenue = new Parameter.ParameterBuilder()
+            .pattern(ParameterPattern.STRING).useAsField(List.of(listKeywords)).build();
 
     public AddKeywordsTo(final Session session, final Database database) {
         this.session = session;
         this.database = database;
-        Parameter venue = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
-        Parameter listKeywords = new Parameter.ParameterBuilder()
-                .pattern(ParameterPattern.LOWER_WORD).useAsList().build();
-        Parameter idOrVenue = new Parameter.ParameterBuilder()
-                .pattern(ParameterPattern.IDENTIFIER).useAsField(List.of(listKeywords))
-                .alternativeParameterList(List.of(venue)).build();
-        this.parameters = List.of(idOrVenue);
+        this.parameters = List.of(this.idOrVenue);
     }
 
 
@@ -48,7 +47,7 @@ public class AddKeywordsTo extends Command {
     }
 
     @Override
-    public Result exec(Dictionary<Parameter, Object> parameterDict) {
+    public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
         for (Parameter parameter: this.parameters
         ) {
             System.out.println(parameter.getPattern());

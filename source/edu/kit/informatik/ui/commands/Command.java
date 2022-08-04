@@ -33,5 +33,6 @@ public abstract class Command {
      * @param parameters a dictionary of parsed parameters
      * @return result of execution
      */
-    public abstract Result exec(Dictionary<Parameter, Object> parameters);
+    public abstract Result exec(Dictionary<Parameter, List<Object>> parameters);
+
 }

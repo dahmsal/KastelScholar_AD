@@ -4,11 +4,9 @@ import edu.kit.informatik.data.Database;
 import edu.kit.informatik.ui.Parser.CommandParser;
 import edu.kit.informatik.ui.Parser.ParameterParser;
 import edu.kit.informatik.ui.commands.Command;
-import edu.kit.informatik.ui.commands.input.AddAuthor;
-import edu.kit.informatik.ui.commands.input.AddJournal;
-import edu.kit.informatik.ui.commands.input.AddKeywordsTo;
-import edu.kit.informatik.ui.commands.input.Quit;
+import edu.kit.informatik.ui.commands.subscriber.InputCommands;
 import edu.kit.informatik.util.ObjectPair;
+import edu.kit.informatik.util.exception.InputException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +25,8 @@ public class Session {
 
     public Session () {
         this.running = true;
-        this.commandList.add(new Quit(this));
-        this.commandList.add(new AddAuthor(this, new Database()));
-        this.commandList.add(new AddJournal(this, new Database()));
-        this.commandList.add(new AddKeywordsTo(this, new Database()));
+        InputCommands inputCommands = new InputCommands(this, new Database());
+        this.commandList.addAll(inputCommands.subscribeToAll());
     }
 
     public void runSession() {

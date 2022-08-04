@@ -43,7 +43,7 @@ public class AddAuthor extends Command {
     }
 
     @Override
-    public Result exec(Dictionary<Parameter, Object> parameterDict) {
+    public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
         for (Parameter parameter: this.parameters
         ) {
             System.out.println(parameterDict.get(parameter).toString());

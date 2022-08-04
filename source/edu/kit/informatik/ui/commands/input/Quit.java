@@ -35,7 +35,7 @@ public class Quit extends Command {
     }
 
     @Override
-    public Result exec(Dictionary<Parameter, Object> parameter) {
+    public Result exec(Dictionary<Parameter, List<Object>> parameter) {
         this.session.quit();
         return new Result(true);
     }

@@ -2,7 +2,7 @@
  * Copyright (c) 2022, KASTEL. All rights reserved.
  */
 
-package edu.kit.informatik.ui.session;
+package edu.kit.informatik.util.exception;
 /**
  * An exception indicating that a user input is invalid.
  *
@@ -12,7 +12,7 @@ package edu.kit.informatik.ui.session;
  * @version 1.0
  */
 public class InputException extends Exception {
-    private static final long serialVersionUID = -5782422824597370223L;
+    private static final long serialVersionUID = -8855047592046284760L;
 
     /**
      * Constructs a new instance of InputException.
