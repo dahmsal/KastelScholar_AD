@@ -18,9 +18,9 @@ public class Database<D extends DataObject>  {
     }
 
     public D findById(String id) throws IdentifierException {
-        try {
+        if (this.dataMap.get(id) != null) {
             return this.dataMap.get(id);
-        } catch (NullPointerException e) {
+        } else {
             throw new IdentifierException("no object with id exists");
         }
 

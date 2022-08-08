@@ -26,6 +26,7 @@ public class Publication implements DataObject {
         this.title = title;
         this.keywords = new HashSet<>();
         this.citations =  new HashSet<>();
+        this.authors = new HashSet<>();
     }
 
     @Override
@@ -33,15 +34,16 @@ public class Publication implements DataObject {
         return id;
     }
 
-    public void addAuthor(Author author) throws InvalidParameterException {
-        if (this.authors.contains(author)) {
-            throw new InvalidParameterException("author has already been set");
-        } else {
-            this.authors.add(author);
+    public void addAuthors(Set<Author> newAuthors) throws InvalidParameterException {
+        for (Author author: newAuthors) {
+            if (this.authors.contains(author)) {
+                throw new InvalidParameterException("author has already been set");
+            }
         }
+        this.authors.addAll(newAuthors);
     }
 
-    public void addKeywords(List<String> keywords) {
+    public void addKeywords(Set<String> keywords) {
         this.keywords.addAll(keywords);
     }
 
@@ -49,7 +51,14 @@ public class Publication implements DataObject {
         Set<String> returnSet = new HashSet<>();
         returnSet.addAll(this.keywords);
         returnSet.addAll(this.venue.getKeywords());
+        if (returnSet.isEmpty()) {
+            return Set.of();
+        }
         return returnSet;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     public boolean isValid() {
@@ -57,14 +66,17 @@ public class Publication implements DataObject {
     }
 
     public void addCitation(Publication publication)  throws InvalidParameterException {
-        if (!this.citations.contains(publication)) {
-            citations.add(publication);
-            return;
+        if (this.citations.contains(publication)) {
+            throw new InvalidParameterException("citation already exists");
         }
         if (this.equals(publication)) {
             throw new InvalidParameterException("a publication cannot cite itself");
         }
-        throw new InvalidParameterException("citation already exists");
+        if (publication.getYear() > this.year) {
+            throw new InvalidParameterException("a citation must be older than the publication");
+        }
+        this.citations.add(publication);
+
     }
 
     public Set<Author> getAuthors() {

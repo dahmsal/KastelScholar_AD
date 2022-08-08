@@ -8,7 +8,7 @@ import edu.kit.informatik.ui.commands.parameter.Parameter;
 
 import java.util.Dictionary;
 import java.util.List;
-import java.util.regex.MatchResult;
+
 
 /**
  * The quit command quits the program and needs no parameters

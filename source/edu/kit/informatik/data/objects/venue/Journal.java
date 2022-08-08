@@ -3,11 +3,10 @@ package edu.kit.informatik.data.objects.venue;
 import edu.kit.informatik.util.strings.UtilStrings;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Journal extends Venue {
-    private static final  String VENUE_TYPE = "series";
+    private static final  String VENUE_TYPE = "journal";
 
     private final String name;
     private final Set<String> keywords;
@@ -19,7 +18,7 @@ public class Journal extends Venue {
         this.keywords = new HashSet<>();
     }
     @Override
-    public void addKeywords(List<String> keywords) {
+    public void addKeywords(Set<String> keywords) {
         this.keywords.addAll(keywords);
     }
 
@@ -30,11 +29,7 @@ public class Journal extends Venue {
 
     @Override
     public String getId() {
-        StringBuilder idBuilder = new StringBuilder();
-        idBuilder.append(VENUE_TYPE);
-        idBuilder.append(UtilStrings.getWHITESPACE());
-        idBuilder.append(this.name);
-        return idBuilder.toString();
+        return createId(this.name);
     }
 
     @Override
@@ -46,5 +41,14 @@ public class Journal extends Venue {
         return publisher;
     }
 
-
+    public static String createId(String name) {
+        StringBuilder idBuilder = new StringBuilder();
+        idBuilder.append(VENUE_TYPE);
+        idBuilder.append(UtilStrings.getWhitespace());
+        idBuilder.append(name);
+        return idBuilder.toString();
+    }
 }
+
+
+

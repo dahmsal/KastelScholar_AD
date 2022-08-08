@@ -20,7 +20,7 @@ public class Series extends Venue {
     }
 
     @Override
-    public void addKeywords(List<String> keywords) {
+    public void addKeywords(Set<String> keywords) {
         this.keywords.addAll(keywords);
     }
 
@@ -31,11 +31,7 @@ public class Series extends Venue {
 
     @Override
     public String getId() {
-        StringBuilder idBuilder = new StringBuilder();
-        idBuilder.append(VENUE_TYPE);
-        idBuilder.append(UtilStrings.getWHITESPACE());
-        idBuilder.append(this.name);
-        return idBuilder.toString();
+        return createId(this.name);
     }
 
     @Override
@@ -75,4 +71,13 @@ public class Series extends Venue {
         }
     }
 
+    public static String createId(String name) {
+        StringBuilder idBuilder = new StringBuilder();
+        idBuilder.append(VENUE_TYPE);
+        idBuilder.append(UtilStrings.getWhitespace());
+        idBuilder.append(name);
+        return idBuilder.toString();
+    }
 }
+
+

@@ -1,5 +1,7 @@
 package edu.kit.informatik.ui.commands.parameter;
 
+import edu.kit.informatik.util.DataType;
+
 public class ScholarParameter {
 
     public static Parameter.ParameterBuilder idParameter() {
@@ -15,7 +17,7 @@ public class ScholarParameter {
     }
 
     public static Parameter.ParameterBuilder intParameter() {
-        return new Parameter.ParameterBuilder().pattern(ParameterPattern.INTEGER);
+        return new Parameter.ParameterBuilder().pattern(ParameterPattern.INTEGER).setType(DataType.INT);
     }
 
     public static Parameter.ParameterBuilder keywordParameter() {
@@ -24,6 +26,6 @@ public class ScholarParameter {
 
     public static Parameter.ParameterBuilder venueParameter() {
         return new Parameter.ParameterBuilder().
-                specialPattern("((\bseries\b)|(\bjournal\b))+ " + ParameterPattern.STRING.getPattern());
+                specialPattern("((\\bseries\\b)|(\\bjournal\\b))+ [a-zA-Z\\d\\s]+");
     }
 }

@@ -35,7 +35,11 @@ public class Session {
             try {
                 Result result = processCommand(scanner.nextLine());
                 if (result.getResultMessage() != null) {
-                    System.out.println(result.getResultMessage());
+                    if (result.isSuccess()) {
+                        System.out.println(result.getResultMessage());
+                    } else {
+                        System.out.println("Error, " + result.getResultMessage());
+                    }
                 }
             } catch (InputException exception) {
                 System.out.println("InputException:" + exception.getMessage());

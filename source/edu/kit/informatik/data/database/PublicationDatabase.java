@@ -5,6 +5,7 @@ import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.util.exception.IdentifierException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PublicationDatabase {
@@ -56,5 +57,8 @@ public class PublicationDatabase {
         return returnId;
     }
 
+    public Collection<Publication> getAllPublications() {
+        return this.database.getValues();
+    }
 
 }

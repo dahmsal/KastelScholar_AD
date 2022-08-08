@@ -3,15 +3,22 @@ package edu.kit.informatik.ui.commands.input;
 
 
 import edu.kit.informatik.data.DatabaseProvider;
+import edu.kit.informatik.data.objects.Publication;
+import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
+import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
+import edu.kit.informatik.ui.parser.UtilParser;
+import edu.kit.informatik.util.exception.IdentifierException;
 
+import java.sql.ResultSet;
 import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -21,10 +28,10 @@ public class AddKeywordsTo extends Command {
     private final List<Parameter> parameters;
     private final Session session;
     private final DatabaseProvider databaseProvider;
-    private final Parameter listKeywords = new Parameter.ParameterBuilder()
-            .pattern(ParameterPattern.LOWER_WORD).useAsList().build();
-    private final Parameter idOrVenue = new Parameter.ParameterBuilder()
-            .pattern(ParameterPattern.STRING).useAsField(List.of(listKeywords)).build();
+    private final Parameter listKeywords = ScholarParameter.keywordParameter().useAsList().build();
+    private final Parameter idOrVenue = ScholarParameter.stringParameter().
+            useAsField(List.of(this.listKeywords)).build();
+    private final Parameter id = ScholarParameter.idParameter().build();
 
     public AddKeywordsTo(final Session session, final DatabaseProvider databaseProvider) {
         this.session = session;
@@ -49,10 +56,27 @@ public class AddKeywordsTo extends Command {
 
     @Override
     public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
-        for (Parameter parameter: this.parameters
-        ) {
-            System.out.println(parameter.getPattern());
-            System.out.println(parameterDict.get(parameter).toString());
+        String inputIdentifier = (String) parameterDict.get(idOrVenue).get(0);
+        Set<String> keywords = new HashSet<>();
+        for (Object keyword: parameterDict.get(listKeywords)) {
+            keywords.add((String) keyword);
+        }
+        if (UtilParser.matchesParameter(this.id, inputIdentifier)) {
+            Publication publication;
+            try {
+                publication = databaseProvider.getPublicationDatabase().getPublication(inputIdentifier);
+            } catch (IdentifierException e) {
+                return new Result(false, e.getMessage());
+            }
+            publication.addKeywords(keywords);
+        } else {
+            Venue venue;
+            try {
+                venue = databaseProvider.getVenueDatabase().getVenue(inputIdentifier);
+            } catch (IdentifierException e) {
+                return new Result(false, e.getMessage());
+            }
+            venue.addKeywords(keywords);
         }
         return new Result(true);
     }

@@ -19,6 +19,8 @@ public abstract class Venue implements DataObject {
 
     public abstract Set<String> getKeywords();
 
-    public abstract void addKeywords(List<String> keywords);
+    public abstract void addKeywords(Set<String> keywords);
+
+
 
 }

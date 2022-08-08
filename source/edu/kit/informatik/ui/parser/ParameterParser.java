@@ -22,7 +22,7 @@ public class ParameterParser {
                 parameterBundle.put(param, parseList(parameterScanner.next().trim(), param));
             }
             else if (param.isAsField()) {
-                Scanner fieldScanner = new Scanner(parameterScanner.next().trim());
+                Scanner fieldScanner = new Scanner(paramInput);
                 fieldScanner.useDelimiter(":");
                 if (!fieldScanner.hasNext()) {
                     throw new InputException("no arg provided");
@@ -31,9 +31,15 @@ public class ParameterParser {
                 if (fieldScanner.hasNext()) {
                     parameterBundle.put(param, parseParameter(fieldToken, param));
                 }
-                Dictionary<Parameter, List<Object>> parsedField
-                        = parseArguments(((ParameterWithField) param).getParameterField(), fieldScanner.next());
-                parameterBundle.putAll((Map<Parameter, List<Object>>) parsedField);
+                try {
+                    String nextToken = fieldScanner.next();
+                    Dictionary<Parameter, List<Object>> parsedField
+                            = parseArguments(((ParameterWithField) param).getParameterField(), nextToken);
+                    parameterBundle.putAll((Map<Parameter, List<Object>>) parsedField);
+                } catch (NoSuchElementException e) {
+                    throw new InputException("no field args given");
+                } return parameterBundle;
+
             } else {
                 parameterBundle.put(param, parseParameter(parameterScanner.next().trim(), param));
             }
@@ -66,14 +72,14 @@ public class ParameterParser {
     }
 
     private static List<Object> parseList(String inputToken, Parameter parameter) throws  InputException {
-        ArrayList<Object> listParameters = new ArrayList<Object>();
+        ArrayList<Object> listParameters = new ArrayList<>();
         Parameter returnParam = null;
         Scanner listScanner = new Scanner(inputToken);
         listScanner.useDelimiter(";");
         if (listScanner.hasNext()) {
             do {
                 String nextInList = listScanner.next().trim();
-                listParameters.add(parseParameter(nextInList, parameter));
+                listParameters.add(parseParameter(nextInList, parameter).get(0));
             } while (listScanner.hasNext());
             return listParameters;
         } else { throw  new InputException("no list provided"); }
