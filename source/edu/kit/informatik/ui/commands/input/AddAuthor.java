@@ -1,6 +1,6 @@
 package edu.kit.informatik.ui.commands.input;
 
-import edu.kit.informatik.data.Database;
+import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.session.Result;
@@ -18,11 +18,11 @@ public class AddAuthor extends Command {
     private static final String PATTERN = "^add author";
     private final List<Parameter> parameters;
     private final Session session;
-    private final Database database;
+    private final DatabaseProvider databaseProvider;
 
-    public AddAuthor(final Session session, final Database database) {
+    public AddAuthor(final Session session, final DatabaseProvider databaseProvider) {
         this.session = session;
-        this.database = database;
+        this.databaseProvider = databaseProvider;
         Parameter author = new Parameter.ParameterBuilder().pattern(ParameterPattern.NAME).useAsList().build();
         this.parameters = List.of(author);
     }

@@ -1,4 +1,4 @@
-package edu.kit.informatik.ui.Parser;
+package edu.kit.informatik.ui.parser;
 
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.util.exception.InputException;

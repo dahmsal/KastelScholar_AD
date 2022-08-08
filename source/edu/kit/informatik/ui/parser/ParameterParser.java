@@ -1,4 +1,4 @@
-package edu.kit.informatik.ui.Parser;
+package edu.kit.informatik.ui.parser;
 
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterWithField;
@@ -37,7 +37,6 @@ public class ParameterParser {
             } else {
                 parameterBundle.put(param, parseParameter(parameterScanner.next().trim(), param));
             }
-
         }
         if (parameterScanner.hasNext()) {
             throw new InputException("invalid number of args");

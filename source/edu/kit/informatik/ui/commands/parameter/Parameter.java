@@ -44,6 +44,7 @@ public class Parameter {
         return this.alternativeParameters;
     }
 
+
     public static class ParameterBuilder {
         private boolean asList;
         private boolean asField;

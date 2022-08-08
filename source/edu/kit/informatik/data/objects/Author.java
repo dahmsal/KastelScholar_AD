@@ -1,6 +1,6 @@
 package edu.kit.informatik.data.objects;
 
-public class Author {
+public class Author implements DataObject {
     private String name;
     private String surname;
 
@@ -15,5 +15,10 @@ public class Author {
 
     public String getSurname() {
         return this.surname;
+    }
+
+    @Override
+    public String getId() {
+        return toString();
     }
 }

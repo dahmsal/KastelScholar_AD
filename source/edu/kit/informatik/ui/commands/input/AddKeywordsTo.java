@@ -1,7 +1,8 @@
 package edu.kit.informatik.ui.commands.input;
 
 
-import edu.kit.informatik.data.Database;
+
+import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
@@ -19,15 +20,15 @@ public class AddKeywordsTo extends Command {
     private static final String PATTERN = "^add keywords to";
     private final List<Parameter> parameters;
     private final Session session;
-    private final Database database;
+    private final DatabaseProvider databaseProvider;
     private final Parameter listKeywords = new Parameter.ParameterBuilder()
             .pattern(ParameterPattern.LOWER_WORD).useAsList().build();
     private final Parameter idOrVenue = new Parameter.ParameterBuilder()
             .pattern(ParameterPattern.STRING).useAsField(List.of(listKeywords)).build();
 
-    public AddKeywordsTo(final Session session, final Database database) {
+    public AddKeywordsTo(final Session session, final DatabaseProvider databaseProvider) {
         this.session = session;
-        this.database = database;
+        this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.idOrVenue);
     }
 

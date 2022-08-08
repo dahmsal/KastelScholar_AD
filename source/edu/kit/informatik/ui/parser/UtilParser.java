@@ -1,4 +1,4 @@
-package edu.kit.informatik.ui.Parser;
+package edu.kit.informatik.ui.parser;
 
 import java.util.List;
 import java.util.regex.Pattern;

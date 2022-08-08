@@ -1,11 +1,16 @@
 package edu.kit.informatik.ui.commands.input;
 
-import edu.kit.informatik.data.Database;
+import edu.kit.informatik.data.DatabaseProvider;
+import edu.kit.informatik.data.database.PublicationDatabase;
+import edu.kit.informatik.data.objects.Publication;
+import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
+import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
+import edu.kit.informatik.util.exception.IdentifierException;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -17,17 +22,17 @@ public class AddArticleTo extends Command {
     private static final String PATTERN = "^add article to";
     private final List<Parameter> parameters;
     private final Session session;
-    private final Database database;
+    private final DatabaseProvider databaseProvider;
+    private final Parameter id = ScholarParameter.idParameter().build();
+    private final Parameter year = ScholarParameter.intParameter().build();
+    private final Parameter title = ScholarParameter.stringParameter().build();
+    private final Parameter venue = ScholarParameter.venueParameter()
+            .useAsField(List.of(id, year, title)).build();
 
-    public AddArticleTo(final Session session, final Database database) {
+    public AddArticleTo(final Session session, final DatabaseProvider databaseProvider) {
         this.session = session;
-        this.database = database;
-        Parameter venue = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
-        Parameter doubleDot = new Parameter.ParameterBuilder().specialPattern(":").build();
-        Parameter id = new Parameter.ParameterBuilder().pattern(ParameterPattern.IDENTIFIER).build();
-        Parameter year = new Parameter.ParameterBuilder().pattern(ParameterPattern.INTEGER).build();
-        Parameter title = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
-        this.parameters = List.of(venue, doubleDot, id, year, title);
+        this.databaseProvider = databaseProvider;
+        this.parameters = List.of(venue);
     }
 
 
@@ -37,8 +42,8 @@ public class AddArticleTo extends Command {
     }
 
     /**
-     * The quit-command has no parameters
-     * @return empty list
+     * Add article to series has a venue parameter as field with data used to create a publication
+     * @return venue parameter-field (venue:id,year,title)
      */
     @Override
     public List<Parameter> getParams() {
@@ -47,9 +52,21 @@ public class AddArticleTo extends Command {
 
     @Override
     public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
-        for (Parameter parameter: this.parameters
-             ) {
-            System.out.println(parameterDict.get(parameter).toString());
+        String venueName = (String) parameterDict.get(this.venue).get(0);
+        Venue existingVenue;
+        try {
+            existingVenue = databaseProvider.getVenueDatabase().getVenue(venueName);
+        } catch (IdentifierException e) {
+            return new Result(false, e.getMessage());
+        }
+        String id = (String) parameterDict.get(this.id).get(0);
+        int year = (int) parameterDict.get(this.year).get(0);
+        String title = (String) parameterDict.get(this.title).get(0);
+        Publication newPublication = new Publication(existingVenue, id, year, title);
+        try {
+            this.databaseProvider.getPublicationDatabase().addPublication(newPublication);
+        } catch (IdentifierException e) {
+            return new Result(false, e.getMessage());
         }
         return new Result(true);
     }

@@ -1,14 +1,17 @@
 package edu.kit.informatik.data.objects.venue;
 
 import edu.kit.informatik.util.exception.IdentifierException;
+import edu.kit.informatik.util.strings.UtilStrings;
 
 import java.util.*;
 
 public class Series extends Venue {
+    private static final String VENUE_TYPE = "series";
 
-    private String name;
-    private Set<String> keywords;
-    private Map<Integer, Conference> conferences;
+    private final String name;
+    private final Set<String> keywords;
+    private final Map<Integer, Conference> conferences;
+
 
     public Series(String name) {
         this.name =  name;
@@ -24,6 +27,15 @@ public class Series extends Venue {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getId() {
+        StringBuilder idBuilder = new StringBuilder();
+        idBuilder.append(VENUE_TYPE);
+        idBuilder.append(UtilStrings.getWHITESPACE());
+        idBuilder.append(this.name);
+        return idBuilder.toString();
     }
 
     @Override

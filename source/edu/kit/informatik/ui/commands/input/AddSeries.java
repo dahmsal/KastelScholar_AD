@@ -1,6 +1,7 @@
 package edu.kit.informatik.ui.commands.input;
 
-import edu.kit.informatik.data.Database;
+
+import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
@@ -17,9 +18,9 @@ public class AddSeries extends Command {
     private static final String PATTERN = "^add series";
     private final List<Parameter> parameters;
     private final Session session;
-    private final Database database;
+    private final DatabaseProvider database;
 
-    public AddSeries(final Session session, final Database database) {
+    public AddSeries(final Session session, final DatabaseProvider database) {
         this.session = session;
         this.database = database;
         Parameter series = new Parameter.ParameterBuilder().pattern(ParameterPattern.STRING).build();
