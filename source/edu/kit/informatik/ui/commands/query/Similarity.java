@@ -10,10 +10,15 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.Math;
 import edu.kit.informatik.util.exception.IdentifierException;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
+/**
+ * Command: similarity
+ * Get the jaccard-coefficient between the keyword-sets of two publications
+ * @author uppyo
+ * @version 1.0
+ */
 public class Similarity extends Command {
     private static final String PATTERN = "similarity";
     private final DatabaseProvider databaseProvider;
@@ -21,6 +26,10 @@ public class Similarity extends Command {
     private final Parameter id2 = ScholarParameter.idParameter().build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public Similarity(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(id1, id2);

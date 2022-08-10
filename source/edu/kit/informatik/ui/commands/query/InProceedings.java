@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
+/**
+ * Command: in proceedings
+ * Get all publications of a conference from a series
+ * @author uppyo
+ * @version 1.0
+ */
 public class InProceedings extends Command {
     private static final String PATTERN = "^in proceedings";
     private final DatabaseProvider databaseProvider;
@@ -22,6 +28,10 @@ public class InProceedings extends Command {
     private final Parameter year = ScholarParameter.intParameter().build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public InProceedings(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(series, year);

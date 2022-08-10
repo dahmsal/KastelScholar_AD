@@ -11,13 +11,27 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Creates output-string in a given bibliography style
+ * @author uppyo
+ * @version 1.0
+ */
 public class CreateBibliography {
     private static final String PROCEEDINGS = "In Proceedings of";
+    private static final String STYLE_BIB = "bib style could not be found";
+    private static final String STYLE_AUTHOR = "style could not be found in author list creator";
 
+    /**
+     * Create the bibliography output
+     * @param style given style (acm|apa)
+     * @param publications set of publications
+     * @return a output-string bibliography
+     * @throws ParameterException if the style could not be found
+     * @throws IdentifierException if style was not found in author-list creator
+     */
     public static String getBibliography(String style, Set<Publication> publications)
             throws ParameterException, IdentifierException {
         List<Publication> sortedPublications = publications.stream().sorted().collect(Collectors.toList());
-        StringBuilder stringBuilder = new StringBuilder();
         if (style.equals("acm")) {
             return acmBuilder(sortedPublications);
         }
@@ -25,7 +39,7 @@ public class CreateBibliography {
             return apaBuilder(sortedPublications);
         }
         else {
-            throw new ParameterException("bib style could not be found");
+            throw new ParameterException(STYLE_BIB);
         }
     }
 
@@ -46,24 +60,29 @@ public class CreateBibliography {
             }
             return stringBuilder.toString().trim();
         }
-        if (style.equals("apa")){
+        if (style.equals("apa")) {
             for (Author author:authors) {
                 stringBuilder.append(author.getLastName());
                 stringBuilder.append(UtilStrings.getComma()).append(UtilStrings.getWhitespace());
                 stringBuilder.append(author.getFirstLetter()).append(UtilStrings.getDot());
-                stringBuilder.append(UtilStrings.getComma()).append(UtilStrings.getWhitespace());
+                stringBuilder.append(UtilStrings.getDdot()).append(UtilStrings.getWhitespace());
             }
-            //remove trailing comma
-            stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(UtilStrings.getComma()));
-            //replace last comma with "&"
-            int lastComma = stringBuilder.lastIndexOf(UtilStrings.getComma());
-            if (lastComma > 0) {
-                stringBuilder.replace(lastComma, lastComma + 1
+            //remove trailing :
+            stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(UtilStrings.getDdot()));
+            //replace last : with &
+            int lastDdot = stringBuilder.lastIndexOf(UtilStrings.getDdot());
+            if (lastDdot > 0) {
+                stringBuilder.replace(lastDdot, lastDdot + 1
                         , UtilStrings.getWhitespace() + UtilStrings.getAndSymbol());
+            }
+            //replace placeholder : with ,
+            while (stringBuilder.lastIndexOf(UtilStrings.getDdot()) >= 0) {
+                int i = stringBuilder.lastIndexOf(UtilStrings.getDdot());
+                stringBuilder.replace(i, i + 1, UtilStrings.getComma());
             }
             return stringBuilder.toString().trim();
         }
-        throw new IdentifierException("style could not be found in author list creator");
+        throw new IdentifierException(STYLE_AUTHOR);
     }
 
 
@@ -110,6 +129,7 @@ public class CreateBibliography {
             stringBuilder.append(UtilStrings.getWhitespace());
             stringBuilder.append(publication.getVenue().getName());
             if (publication.getVenue() instanceof Series) {
+                stringBuilder.append(UtilStrings.getComma());
                 stringBuilder.append(UtilStrings.getWhitespace());
                 stringBuilder.append(((Series) publication.getVenue()).getLocation(publication.getYear()));
             }

@@ -11,11 +11,21 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
+/**
+ * Command: all publications
+ * Returns all publications that have been added to the session
+ * @author uppyo
+ * @version 1.0
+ */
 public class AllPublications extends Command {
     private static final String PATTERN = "all publications";
     private final DatabaseProvider databaseProvider;
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AllPublications(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of();

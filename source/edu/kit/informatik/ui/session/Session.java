@@ -1,38 +1,51 @@
 package edu.kit.informatik.ui.session;
 
 import edu.kit.informatik.data.DatabaseProvider;
-import edu.kit.informatik.ui.commands.subscriber.QueryCommands;
+import edu.kit.informatik.ui.commands.subscriber.Subscriber;
 import edu.kit.informatik.ui.parser.CommandParser;
 import edu.kit.informatik.ui.parser.ParameterParser;
 import edu.kit.informatik.ui.commands.Command;
-import edu.kit.informatik.ui.commands.subscriber.InputCommands;
 import edu.kit.informatik.util.ObjectPair;
 import edu.kit.informatik.util.exception.InputException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Environment for an instance of the KasteSholar project. Handles user in- and outputs.
+ * @author uppyo
+ * @version 1.0
+ */
 public class Session {
+    private static final String ERROR = "Error, ";
+    private static final String INPUT_EXCEPTION = "InputException:";
+
     private boolean running;
-    private List<Command> commandList = new ArrayList<Command>();
-    private DatabaseProvider databaseProvider;
+    private final List<Command> commandList = new ArrayList<>();
 
+    /**
+     * Initialisation of databases and commands via subscriber
+     * @param subscribers command-subscribers to subscribe commands to session
+     */
+    public Session(List<Subscriber> subscribers) {
+        this.running = true;
+        DatabaseProvider databaseProvider = new DatabaseProvider();
+        for (Subscriber subscriber: subscribers) {
+            this.commandList.addAll(subscriber.subscribeAll(this, databaseProvider));
+        }
+    }
 
+    /**
+     * Quit-command to end session
+     */
     public void quit() {
         this.running = false;
     }
 
-    public Session () {
-        this.running = true;
-        this.databaseProvider = new DatabaseProvider();
-        InputCommands inputCommands = new InputCommands(this, databaseProvider);
-        QueryCommands queryCommands = new QueryCommands(this.databaseProvider);
-        this.commandList.addAll(inputCommands.subscribeToAll());
-        this.commandList.addAll(queryCommands.subscribeToAll());
-    }
-
+    /**
+     * Run the session and parse user-input until quit is called
+     */
     public void runSession() {
         Scanner scanner = new Scanner(System.in);
         do {
@@ -42,11 +55,11 @@ public class Session {
                     if (result.isSuccess()) {
                         System.out.println(result.getResultMessage());
                     } else {
-                        System.out.println("Error, " + result.getResultMessage());
+                        System.out.println(ERROR + result.getResultMessage());
                     }
                 }
             } catch (InputException exception) {
-                System.out.println("InputException:" + exception.getMessage());
+                System.out.println(INPUT_EXCEPTION + exception.getMessage());
             }
         }
         while (this.running);

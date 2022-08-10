@@ -1,6 +1,5 @@
 package edu.kit.informatik.ui.commands.query;
 
-import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
@@ -9,17 +8,23 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.Math;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
+/**
+ * Command: jaccard
+ * Get the jaccard-index (a measure for similarity between two sets) for two sets of keywords
+ * @author uppyo
+ * @version 1.0
+ */
 public class Jaccard extends Command {
     private static final String PATTERN = "^jaccard";
-    private final DatabaseProvider databaseProvider;
     private final Parameter listKeywords1 = ScholarParameter.keywordParameter().useAsList().hasSpaceDelimiter().build();
     private final Parameter listKeywords2 = ScholarParameter.keywordParameter().useAsList().build();
     private final List<Parameter> parameters;
 
-    public Jaccard(final DatabaseProvider databaseProvider) {
-        this.databaseProvider = databaseProvider;
+    /**
+     * The jaccard-command requires no data from the session
+     */
+    public Jaccard() {
         this.parameters = List.of(listKeywords1, listKeywords2);
     }
 

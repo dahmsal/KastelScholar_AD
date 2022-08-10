@@ -1,7 +1,7 @@
 package edu.kit.informatik.data.objects.venue;
 
 import edu.kit.informatik.util.exception.IdentifierException;
-import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 import edu.kit.informatik.util.strings.UtilStrings;
 
 import java.util.*;
@@ -57,7 +57,7 @@ public class Series extends Venue {
      */
     public void addConference(int year, String location) throws IdentifierException {
         if (this.conferences.containsKey(year)) {
-            throw new IdentifierException(DatabaseExceptions.getConferenceDouble());
+            throw new IdentifierException(DatabaseExceptionMessage.getConferenceDouble());
         }
         this.conferences.put(year, new Conference(location));
     }

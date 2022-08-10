@@ -5,7 +5,7 @@ import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.data.objects.venue.Series;
 import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.util.exception.IdentifierException;
-import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 
 import java.util.*;
 
@@ -36,13 +36,13 @@ public class PublicationDatabase {
             try {
                 ((Series) publication.getVenue()).getConference(publication.getYear());
             } catch (IdentifierException e) {
-                throw new IdentifierException(DatabaseExceptions.getConferenceMissing(publication.getYear()));
+                throw new IdentifierException(DatabaseExceptionMessage.getConferenceMissing(publication.getYear()));
             }
         }
         try {
             this.database.addObject(publication);
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getPublicationExists(publication.getId()));
+            throw new IdentifierException(DatabaseExceptionMessage.getPublicationExists(publication.getId()));
         }
 
     }
@@ -57,7 +57,7 @@ public class PublicationDatabase {
         try {
             return this.database.findById(id);
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getPublicationMissing(id));
+            throw new IdentifierException(DatabaseExceptionMessage.getPublicationMissing(id));
         }
 
     }

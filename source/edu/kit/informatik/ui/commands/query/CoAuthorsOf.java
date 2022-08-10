@@ -12,12 +12,22 @@ import edu.kit.informatik.util.exception.IdentifierException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Command: coauthors of
+ * Returns all co-authors of a given author
+ * @author uppyo
+ * @version 1.0
+ */
 public class CoAuthorsOf extends Command {
     private static final String PATTERN = "^coauthors of";
     private final DatabaseProvider databaseProvider;
     private final Parameter author = ScholarParameter.nameParameter().build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public CoAuthorsOf(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(author);

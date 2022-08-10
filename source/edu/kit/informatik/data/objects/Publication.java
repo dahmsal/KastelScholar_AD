@@ -2,8 +2,8 @@ package edu.kit.informatik.data.objects;
 
 import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.util.exception.ParameterException;
-import edu.kit.informatik.util.exception.messages.DataExceptions;
-import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
+import edu.kit.informatik.util.exception.messages.DataExceptionsMessage;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 
 import java.util.*;
 
@@ -54,7 +54,7 @@ public class Publication implements DataObject, Comparable<Publication> {
         Collections.reverse(newAuthors);
         for (Author author: newAuthors) {
             if (this.authors.contains(author)) {
-                throw new ParameterException(DatabaseExceptions.getAuthorWasSet(author.getId()));
+                throw new ParameterException(DatabaseExceptionMessage.getAuthorWasSet(author.getId()));
             }
         }
         this.authors.addAll(newAuthors);
@@ -121,13 +121,13 @@ public class Publication implements DataObject, Comparable<Publication> {
      */
     public void addCitation(Publication publication)  throws ParameterException {
         if (this.citations.contains(publication)) {
-            throw new ParameterException(DataExceptions.getCitationExists());
+            throw new ParameterException(DataExceptionsMessage.getCitationExists());
         }
         if (this.equals(publication)) {
-            throw new ParameterException(DataExceptions.getCiteSelf());
+            throw new ParameterException(DataExceptionsMessage.getCiteSelf());
         }
         if (publication.getYear() > this.year) {
-            throw new ParameterException(DataExceptions.getCiteNewer());
+            throw new ParameterException(DataExceptionsMessage.getCiteNewer());
         }
         this.citations.add(publication);
     }

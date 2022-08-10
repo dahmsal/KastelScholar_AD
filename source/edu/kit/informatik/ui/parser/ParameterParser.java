@@ -3,21 +3,34 @@ package edu.kit.informatik.ui.parser;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterWithField;
 import edu.kit.informatik.util.exception.InputException;
+import edu.kit.informatik.util.exception.messages.ParserExceptionMessage;
 import edu.kit.informatik.util.strings.UtilStrings;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * Parser for parameters of user-input commands
+ * @author uppyo
+ * @version 1.0
+ */
 public class ParameterParser {
 
+    /**
+     * Parse a list of parameters against user-inputs
+     * @param parameters list of parameters
+     * @param paramInput user input
+     * @return Dictionary with key:parameter field:List of Objects
+     * @throws InputException if an invalid number of args got parsed
+     */
     public static Dictionary<Parameter, List<Object>> parseArguments(List<Parameter> parameters, String paramInput)
             throws InputException {
         Hashtable<Parameter, List<Object>> parameterBundle = new Hashtable<>();
         Scanner parameterScanner = new Scanner(paramInput);
-        parameterScanner.useDelimiter(",");
+        parameterScanner.useDelimiter(UtilStrings.getComma());
         for (Parameter param : parameters) {
             if (!parameterScanner.hasNext()) {
-                throw new InputException("invalid number of args");
+                throw new InputException(ParserExceptionMessage.getNumberOfArgs());
             }
             if (param.hasSpaceDelimiter()) {
                 parameterScanner.useDelimiter(UtilStrings.getWhitespace());
@@ -27,9 +40,9 @@ public class ParameterParser {
             }
             else if (param.isAsField()) {
                 Scanner fieldScanner = new Scanner(paramInput);
-                fieldScanner.useDelimiter(":");
+                fieldScanner.useDelimiter(UtilStrings.getDdot());
                 if (!fieldScanner.hasNext()) {
-                    throw new InputException("no arg provided");
+                    throw new InputException(ParserExceptionMessage.getNoArgs());
                 }
                 String fieldToken = fieldScanner.next().trim();
                 if (fieldScanner.hasNext()) {
@@ -41,7 +54,7 @@ public class ParameterParser {
                             = parseArguments(((ParameterWithField) param).getParameterField(), nextToken);
                     parameterBundle.putAll((Map<Parameter, List<Object>>) parsedField);
                 } catch (NoSuchElementException e) {
-                    throw new InputException("no field args given");
+                    throw new InputException(ParserExceptionMessage.getNoArgs());
                 } return parameterBundle;
 
             } else {
@@ -49,7 +62,7 @@ public class ParameterParser {
             }
         }
         if (parameterScanner.hasNext()) {
-            throw new InputException("invalid number of args");
+            throw new InputException(ParserExceptionMessage.getNumberOfArgs());
         }
         return parameterBundle;
     }
@@ -60,7 +73,7 @@ public class ParameterParser {
             try {
                 return List.of(parameter.getType().cast(inputToken));
             } catch (ClassCastException E) {
-                throw new InputException("typecast unsuccessful");
+                throw new InputException(ParserExceptionMessage.getTYPECAST());
             }
         } else if (parameter.getAlternativeParameters() != null) {
             for (Parameter altParam : parameter.getAlternativeParameters()) {
@@ -69,46 +82,23 @@ public class ParameterParser {
                 } catch (InputException ignored) {
                 }
             }
-            throw new InputException("wrong parameter format");
+            throw new InputException(ParserExceptionMessage.getWrongFormat());
         } else {
-            throw new InputException("wrong parameter format");
+            throw new InputException(ParserExceptionMessage.getWrongFormat());
         }
     }
 
     private static List<Object> parseList(String inputToken, Parameter parameter) throws  InputException {
         ArrayList<Object> listParameters = new ArrayList<>();
-        Parameter returnParam = null;
         Scanner listScanner = new Scanner(inputToken);
-        listScanner.useDelimiter(";");
+        listScanner.useDelimiter(UtilStrings.getSemicolon());
         if (listScanner.hasNext()) {
             do {
                 String nextInList = listScanner.next().trim();
                 listParameters.add(parseParameter(nextInList, parameter).get(0));
             } while (listScanner.hasNext());
             return listParameters;
-        } else { throw  new InputException("no list provided"); }
+        } else { throw  new InputException(ParserExceptionMessage.getNoList()); }
     }
-
-/*
-    private static Dictionary<Parameter, Object> parseField(String inputToken, ParameterWithField parameterWithField)
-            throws InputException {
-        Hashtable<Parameter, Object> fieldBundle = new Hashtable<>();
-        Scanner fieldScanner = new Scanner(inputToken);
-        fieldScanner.useDelimiter(":");
-        if (!fieldScanner.hasNext()) {
-            throw new InputException("no arg provided");
-        }
-        String fieldToken = fieldScanner.next().trim();
-        if (fieldScanner.hasNext()) {
-            fieldBundle.put(parameterWithField, parseParameter(fieldToken, parameterWithField));
-            Dictionary<Parameter, Object> parsedField
-                    = parseArguments(parameterWithField.getParameterField(), fieldScanner.next());
-            fieldBundle.putAll((Map<? extends Parameter, ?>) parsedField);
-            return fieldBundle;
-        } else {
-            throw new InputException("no field of args provided");
-        }
-    }
-*/
 
 }

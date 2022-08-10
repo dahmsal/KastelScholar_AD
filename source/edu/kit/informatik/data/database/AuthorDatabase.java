@@ -2,7 +2,7 @@ package edu.kit.informatik.data.database;
 
 import edu.kit.informatik.data.objects.Author;
 import edu.kit.informatik.util.exception.IdentifierException;
-import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 
 /**
  * Explicit database for Objects of type Author.
@@ -26,7 +26,7 @@ public class AuthorDatabase {
         try {
             this.database.addObject(author);
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getAuthorExists(author.getId()));
+            throw new IdentifierException(DatabaseExceptionMessage.getAuthorExists(author.getId()));
         }
     }
 
@@ -40,7 +40,7 @@ public class AuthorDatabase {
         try {
             return this.database.findById(id);
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getAuthorMissing(id));
+            throw new IdentifierException(DatabaseExceptionMessage.getAuthorMissing(id));
         }
     }
 }

@@ -6,7 +6,6 @@ import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.output.CreateBibliography;
-import edu.kit.informatik.ui.output.CreateOutput;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.exception.ParameterException;
@@ -14,6 +13,12 @@ import edu.kit.informatik.util.exception.ParameterException;
 
 import java.util.*;
 
+/**
+ * Command: print bibliography
+ * Create a bibliography output in a given style (acm|apa) from a set of publications
+ * @author uppyo
+ * @version 1.0
+ */
 public class PrintBibliography extends Command {
     private static final String PATTERN = "print bibliography";
     private final DatabaseProvider databaseProvider;
@@ -21,6 +26,10 @@ public class PrintBibliography extends Command {
     private final Parameter style = ScholarParameter.bibStyleParameter().useAsField(List.of(listId)).build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public PrintBibliography(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(style);

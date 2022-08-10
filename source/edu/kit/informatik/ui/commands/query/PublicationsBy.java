@@ -14,12 +14,22 @@ import edu.kit.informatik.util.strings.UtilStrings;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Command: publications by
+ * Returns all publications by a given list of authors
+ * @author uppyo
+ * @version 1.0
+ */
 public class PublicationsBy extends Command {
     private static final String PATTERN = "^publications by";
     private final DatabaseProvider databaseProvider;
     private final Parameter listAuthors = ScholarParameter.nameParameter().useAsList().build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public PublicationsBy(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(listAuthors);

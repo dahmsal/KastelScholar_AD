@@ -3,12 +3,13 @@
  */
 
 package edu.kit.informatik.util.exception;
+
 /**
  * An exception indicating that a user input is invalid.
  *
  * @author Peter Oettig
  * @author Moritz Gstuer
- * @author  uppyo
+ * @author uppyo
  * @version 1.0
  */
 public class InputException extends Exception {

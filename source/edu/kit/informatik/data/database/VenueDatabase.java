@@ -3,7 +3,7 @@ package edu.kit.informatik.data.database;
 import edu.kit.informatik.data.objects.venue.Series;
 import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.util.exception.IdentifierException;
-import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 
 /**
  * Explicit venue database. Stores Journal and Series Objects. Contains useful queries.
@@ -24,7 +24,7 @@ public class VenueDatabase {
         try {
             this.database.addObject(venue);
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getVenueExists(venue.getName()));
+            throw new IdentifierException(DatabaseExceptionMessage.getVenueExists(venue.getName()));
         }
     }
 
@@ -38,7 +38,7 @@ public class VenueDatabase {
         try {
             return this.database.findById(id);
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getVenueMissing(id));
+            throw new IdentifierException(DatabaseExceptionMessage.getVenueMissing(id));
         }
     }
 
@@ -52,7 +52,7 @@ public class VenueDatabase {
         try {
             return (Series) this.database.findById(Series.createId(name));
         } catch (IdentifierException e) {
-            throw new IdentifierException(DatabaseExceptions.getSeriesMissing(name));
+            throw new IdentifierException(DatabaseExceptionMessage.getSeriesMissing(name));
         }
     }
 

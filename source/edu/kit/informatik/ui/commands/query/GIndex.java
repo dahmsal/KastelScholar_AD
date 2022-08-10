@@ -14,6 +14,12 @@ import edu.kit.informatik.util.Math;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Command: g-index
+ * Get the g-index of a given author.
+ * @author uppyo
+ * @version 1.0
+ */
 public class GIndex extends Command {
     private static final String PATTERN = "^g-index";
     private final DatabaseProvider databaseProvider;

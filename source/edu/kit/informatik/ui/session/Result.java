@@ -12,7 +12,7 @@ public class Result {
     private final String resultMessage;
 
     /**
-     * result of an execution with no message
+     * Result of an execution with no message
      * @param success boolean is the execution a success
      */
     public Result(final boolean success) {
@@ -21,7 +21,7 @@ public class Result {
     }
 
     /**
-     * result with a message
+     * Result with a message
      * @param success boolean is the execution a success
      * @param resultMessage optional resultmessage
      */
@@ -31,7 +31,7 @@ public class Result {
     }
 
     /**
-     * is the execution successful ?
+     * Was the execution successful ?
      * @return true if result is a success
      */
     public boolean isSuccess() {

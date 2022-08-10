@@ -13,12 +13,23 @@ import edu.kit.informatik.util.exception.IdentifierException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Command: foreign citations of
+ * Find all foreign citations of an author, all citations of publications where none of the co-authors of the author
+ * were involved.
+ * @author uppyo
+ * @version 1.0
+ */
 public class ForeignCitationsOf extends Command {
     private static final String PATTERN = "^foreign citations of";
     private final DatabaseProvider databaseProvider;
     private final Parameter author = ScholarParameter.nameParameter().build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public ForeignCitationsOf(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(author);
