@@ -1,10 +1,17 @@
 package edu.kit.informatik.data.objects.venue;
 
 import edu.kit.informatik.util.exception.IdentifierException;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
 import edu.kit.informatik.util.strings.UtilStrings;
 
 import java.util.*;
 
+/**
+ * A series where publications can be published in context of a conference.
+ * To publish a fitting conference has to exist.
+ * @author uppyo
+ * @version 1.0
+ */
 public class Series extends Venue {
     private static final String VENUE_TYPE = "series";
 
@@ -12,7 +19,10 @@ public class Series extends Venue {
     private final Set<String> keywords;
     private final Map<Integer, Conference> conferences;
 
-
+    /**
+     * Constructor, initialises internal data-structure
+     * @param name name of the series
+     */
     public Series(String name) {
         this.name =  name;
         this.keywords = new HashSet<>();
@@ -39,13 +49,25 @@ public class Series extends Venue {
         return keywords;
     }
 
+    /**
+     * Add a conference to series.
+     * @param year integer, year of the conference also unique identifier
+     * @param location location of the conference
+     * @throws IdentifierException if a conference in the same year already exists
+     */
     public void addConference(int year, String location) throws IdentifierException {
         if (this.conferences.containsKey(year)) {
-            throw new IdentifierException("conference with same year already exists");
+            throw new IdentifierException(DatabaseExceptions.getConferenceDouble());
         }
-        this.conferences.put(year, new Conference(year, location));
+        this.conferences.put(year, new Conference(location));
     }
 
+    /**
+     * Get a conference of the series by year.
+     * @param year integer, year of the conference
+     * @return Conference-Object
+     * @throws IdentifierException if no matching object could be found
+     */
     public Conference getConference(int year) throws IdentifierException {
         if (this.conferences.containsKey(year)) {
             return this.conferences.get(year);
@@ -53,34 +75,38 @@ public class Series extends Venue {
         throw new IdentifierException("conference doesnt exist");
     }
 
+    /**
+     * Create a unique identifier for the venue-database. This makes it possible for Series and Journals with the same
+     * Name to co-exist. Format: (Venue_Type) + Whitespace + (Venue_Name)
+     * @param name name of the series
+     * @return unique internal identifier as string
+     */
+    public static String createId(String name) {
+        return VENUE_TYPE
+                + UtilStrings.getWhitespace()
+                + name;
+    }
+
+    /**
+     * Get the location of a conference.
+     * @param year identifier of a conference a year
+     * @return the location as String
+     * @throws IdentifierException if no conference could be found
+     */
     public String getLocation(int year) throws IdentifierException {
-        return getConference(year).location;
+        return getConference(year).getLocation();
     }
 
     private static final class Conference {
-        private final int year;
         private final String location;
 
-        private Conference(int year, String location) {
-            this.year = year;
+        private Conference(String location) {
             this.location = location;
-        }
-
-        public int getYear() {
-            return year;
         }
 
         public String getLocation() {
             return location;
         }
-    }
-
-    public static String createId(String name) {
-        StringBuilder idBuilder = new StringBuilder();
-        idBuilder.append(VENUE_TYPE);
-        idBuilder.append(UtilStrings.getWhitespace());
-        idBuilder.append(name);
-        return idBuilder.toString();
     }
 }
 

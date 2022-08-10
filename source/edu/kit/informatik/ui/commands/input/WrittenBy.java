@@ -10,15 +10,15 @@ import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.exception.IdentifierException;
+import edu.kit.informatik.util.exception.ParameterException;
 
-import java.security.InvalidParameterException;
-import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- *
+ * Command: written by
+ * Add a list of authors to a existing publication
+ * @author uppyo
+ * @version 1.0
  */
 public class WrittenBy extends Command {
 
@@ -28,6 +28,10 @@ public class WrittenBy extends Command {
     private final Parameter id = ScholarParameter.idParameter().build();
     private final Parameter listAuthor = ScholarParameter.nameParameter().useAsList().build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public WrittenBy(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(id, listAuthor);
@@ -38,10 +42,6 @@ public class WrittenBy extends Command {
         return PATTERN;
     }
 
-    /**
-     * The quit-command has no parameters
-     * @return empty list
-     */
     @Override
     public List<Parameter> getParams() {
         return this.parameters;
@@ -50,7 +50,7 @@ public class WrittenBy extends Command {
     @Override
     public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
         String publicationID = (String) parameterDict.get(this.id).get(0);
-        Set<Author> authors = new HashSet<>();
+        List<Author> authors = new ArrayList<>();
         Publication publication;
         try {
             for (Object author: parameterDict.get(listAuthor)) {
@@ -62,7 +62,7 @@ public class WrittenBy extends Command {
         }
         try {
             publication.addAuthors(authors);
-        } catch (InvalidParameterException e) {
+        } catch (ParameterException e) {
             return new Result(false, e.getMessage());
         }
         return new Result(true);

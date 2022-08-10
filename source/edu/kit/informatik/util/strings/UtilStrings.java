@@ -51,5 +51,7 @@ public class UtilStrings {
         return GLQQ + i + GRQQ;
     }
 
+    public static String inQuotes(String n) { return ("\"" + n + "\"" ); }
+
 
 }

@@ -3,6 +3,7 @@ package edu.kit.informatik.ui.parser;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ParameterWithField;
 import edu.kit.informatik.util.exception.InputException;
+import edu.kit.informatik.util.strings.UtilStrings;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -17,6 +18,9 @@ public class ParameterParser {
         for (Parameter param : parameters) {
             if (!parameterScanner.hasNext()) {
                 throw new InputException("invalid number of args");
+            }
+            if (param.hasSpaceDelimiter()) {
+                parameterScanner.useDelimiter(UtilStrings.getWhitespace());
             }
             if (param.isAsList()) {
                 parameterBundle.put(param, parseList(parameterScanner.next().trim(), param));

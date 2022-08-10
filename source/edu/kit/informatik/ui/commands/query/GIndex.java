@@ -22,7 +22,7 @@ public class GIndex extends Command {
 
     public GIndex(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
-        this.parameters = List.of();
+        this.parameters = List.of(author);
     }
 
     @Override
@@ -53,10 +53,10 @@ public class GIndex extends Command {
         Comparator<ObjectPair<Publication, Integer>> comparator
                 = Comparator.comparing(ObjectPair::getSecond, Comparator.reverseOrder());
         publicationCitation.sort(comparator);
-        int g = publicationCitation.size() - 1;
+        int g = publicationCitation.size();
         while (g * g > Math.sumList(
                 publicationCitation.subList(0, g).stream().map(ObjectPair::getSecond).collect(Collectors.toList()))
-                && g>0) {
+                && g > 0) {
             g--;
         }
         return new Result(true, String.valueOf(g));

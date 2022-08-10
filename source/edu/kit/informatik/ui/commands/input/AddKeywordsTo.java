@@ -18,7 +18,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *
+ * Command: add keywords to
+ * Add keywords to an existing venue or publication
+ * @author uppyo
+ * @version 1.0
  */
 public class AddKeywordsTo extends Command {
     private static final String PATTERN = "^add keywords to";
@@ -29,6 +32,10 @@ public class AddKeywordsTo extends Command {
             useAsField(List.of(this.listKeywords)).build();
     private final Parameter id = ScholarParameter.idParameter().build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AddKeywordsTo(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.idOrVenue);
@@ -40,10 +47,6 @@ public class AddKeywordsTo extends Command {
         return PATTERN;
     }
 
-    /**
-     * The quit-command has no parameters
-     * @return empty list
-     */
     @Override
     public List<Parameter> getParams() {
         return this.parameters;

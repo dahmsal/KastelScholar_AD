@@ -7,14 +7,16 @@ import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
-import edu.kit.informatik.ui.session.Session;
 import edu.kit.informatik.util.exception.IdentifierException;
 
 import java.util.Dictionary;
 import java.util.List;
 
 /**
- *
+ * Command: add article to
+ * Add a new publication to a existing venue
+ * @author uppyo
+ * @version 1.0
  */
 public class AddArticleTo extends Command {
     private static final String PATTERN = "^add article to";
@@ -26,6 +28,10 @@ public class AddArticleTo extends Command {
     private final Parameter venue = ScholarParameter.venueParameter()
             .useAsField(List.of(id, year, title)).build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AddArticleTo(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(venue);

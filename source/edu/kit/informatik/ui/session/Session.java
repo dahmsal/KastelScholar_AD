@@ -11,6 +11,7 @@ import edu.kit.informatik.util.exception.InputException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Session {
@@ -33,8 +34,8 @@ public class Session {
     }
 
     public void runSession() {
+        Scanner scanner = new Scanner(System.in);
         do {
-            Scanner scanner = new Scanner(System.in);
             try {
                 Result result = processCommand(scanner.nextLine());
                 if (result.getResultMessage() != null) {

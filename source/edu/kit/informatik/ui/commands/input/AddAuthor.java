@@ -14,7 +14,10 @@ import java.util.Dictionary;
 import java.util.List;
 
 /**
- *
+ * Command: add author
+ * Add a new author to the Session
+ * @author uppyo
+ * @version 1.0
  */
 public class AddAuthor extends Command {
     private static final String PATTERN = "^add author";
@@ -22,6 +25,10 @@ public class AddAuthor extends Command {
     private final DatabaseProvider databaseProvider;
     private final Parameter name = ScholarParameter.nameParameter().build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AddAuthor(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(name);
@@ -33,10 +40,7 @@ public class AddAuthor extends Command {
         return PATTERN;
     }
 
-    /**
-     * The quit-command has no parameters
-     * @return empty list
-     */
+
     @Override
     public List<Parameter> getParams() {
         return this.parameters;

@@ -13,7 +13,10 @@ import java.util.Dictionary;
 import java.util.List;
 
 /**
- *
+ * Command: add series
+ * Add a new series to the session
+ * @author uppyo
+ * @version 1.0
  */
 public class AddSeries extends Command {
     private static final String PATTERN = "^add series";
@@ -21,6 +24,10 @@ public class AddSeries extends Command {
     private final DatabaseProvider databaseProvider;
     private final Parameter name = ScholarParameter.stringParameter().build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AddSeries(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(name);
@@ -32,10 +39,6 @@ public class AddSeries extends Command {
         return PATTERN;
     }
 
-    /**
-     * The quit-command has no parameters
-     * @return empty list
-     */
     @Override
     public List<Parameter> getParams() {
         return this.parameters;

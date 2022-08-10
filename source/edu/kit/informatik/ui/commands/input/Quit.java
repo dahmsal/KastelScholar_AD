@@ -12,12 +12,18 @@ import java.util.List;
 
 /**
  * The quit command quits the program and needs no parameters
+ * @author uppyo
+ * @version 1.0
  */
 public class Quit extends Command {
     private static final String PATTERN = "quit";
 
     private final Session session;
 
+    /**
+     * Signals the session to quit command-processing
+     * @param session current session
+     */
     public Quit(final Session session) { this.session = session; }
 
     @Override

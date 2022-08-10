@@ -1,21 +1,35 @@
 package edu.kit.informatik.data.objects;
 
 import edu.kit.informatik.data.objects.venue.Venue;
+import edu.kit.informatik.util.exception.ParameterException;
+import edu.kit.informatik.util.exception.messages.DataExceptions;
+import edu.kit.informatik.util.exception.messages.DatabaseExceptions;
 
-import javax.swing.*;
-import java.security.InvalidParameterException;
 import java.util.*;
 
-public class Publication implements DataObject, Comparable<Publication>{
+/**
+ * A scientific Publication, includes useful queries. A publication has to be linked to a venue but does not require an
+ * author. A publication is invalid if no author has been added.
+ * @author uppyo
+ * @version 1.0
+ */
+public class Publication implements DataObject, Comparable<Publication> {
 
     private final String id;
     private final int year;
     private final String title;
     private final Venue venue;
-    private List<Author> authors;
-    private Set<String> keywords;
-    private Set<Publication> citations;
+    private final List<Author> authors;
+    private final Set<String> keywords;
+    private final Set<Publication> citations;
 
+    /**
+     * Constructor of a publication with minimum data.
+     * @param venue a existing venue
+     * @param id a unique identifier (lowercase with numbers)
+     * @param year int year, when venue is a series a conference has to be in the year
+     * @param title full title of the publication
+     */
     public Publication(Venue venue, String id, int year, String title) {
         this.venue = venue;
         this.id = id;
@@ -23,7 +37,7 @@ public class Publication implements DataObject, Comparable<Publication>{
         this.title = title;
         this.keywords = new HashSet<>();
         this.citations =  new HashSet<>();
-        this.authors = new ArrayList<>();
+        this.authors = new LinkedList<>();
     }
 
     @Override
@@ -31,19 +45,33 @@ public class Publication implements DataObject, Comparable<Publication>{
         return id;
     }
 
-    public void addAuthors(Set<Author> newAuthors) throws InvalidParameterException {
+    /**
+     * Add a list of authors to the publication
+     * @param newAuthors list of author-objects, have to exist in author db
+     * @throws ParameterException if any new author was already added
+     */
+    public void addAuthors(List<Author> newAuthors) throws ParameterException {
+        Collections.reverse(newAuthors);
         for (Author author: newAuthors) {
             if (this.authors.contains(author)) {
-                throw new InvalidParameterException("author has already been set");
+                throw new ParameterException(DatabaseExceptions.getAuthorWasSet(author.getId()));
             }
         }
         this.authors.addAll(newAuthors);
     }
 
+    /**
+     * Add keywords to the publication, duplicates will be ignored
+     * @param keywords set of keywords
+     */
     public void addKeywords(Set<String> keywords) {
         this.keywords.addAll(keywords);
     }
 
+    /**
+     * Get the keywords associated with the publication. Keywords of venue are passed on to the publication.
+     * @return Set of all keywords, own and venue combined
+     */
     public Set<String> getKeywords() {
         Set<String> returnSet = new HashSet<>();
         returnSet.addAll(this.keywords);
@@ -54,48 +82,88 @@ public class Publication implements DataObject, Comparable<Publication>{
         return returnSet;
     }
 
+    /**
+     * Get the year of publication
+     * @return year as int
+     */
     public int getYear() {
         return year;
     }
 
+    /**
+     * Get the venue (Series or Journal)
+     * @return Venue-Object, associated venue
+     */
     public Venue getVenue() {
         return venue;
     }
 
+    /**
+     * Get the title of the publication
+     * @return title as String
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Check if a publication is valid. A publication is invalid if no author has been set.
+     * @return true if the publication is valid
+     */
     public boolean isValid() {
         return !this.authors.isEmpty();
     }
 
-    public void addCitation(Publication publication)  throws InvalidParameterException {
+    /**
+     * Add a new citation to the publication. A citation has to be a different, older, publication
+     * @param publication citation, has to exist in database
+     * @throws ParameterException if the citation is already cited, is the same as or newer than the publication
+     */
+    public void addCitation(Publication publication)  throws ParameterException {
         if (this.citations.contains(publication)) {
-            throw new InvalidParameterException("citation already exists");
+            throw new ParameterException(DataExceptions.getCitationExists());
         }
         if (this.equals(publication)) {
-            throw new InvalidParameterException("a publication cannot cite itself");
+            throw new ParameterException(DataExceptions.getCiteSelf());
         }
         if (publication.getYear() > this.year) {
-            throw new InvalidParameterException("a citation must be older than the publication");
+            throw new ParameterException(DataExceptions.getCiteNewer());
         }
         this.citations.add(publication);
-
     }
 
+    /**
+     * Get a List of all authors, in chronological order
+     * @return list of authors
+     */
     public List<Author> getAuthors() {
-        return authors;
+        List<Author> returnList = new ArrayList<>(this.authors);
+        Collections.reverse(returnList);
+        return returnList;
     }
 
+    /**
+     * Get the nth author of a publication, n has to be in range of get.Authors.length
+     * @param n index of author
+     * @return Author at given index
+     */
     public Author getNthAuthor(int n) {
-        return authors.get(n);
+        return getAuthors().get(n);
     }
 
+    /**
+     * Get all citations of the publication
+     * @return Set of publications that ar cited by this publication
+     */
     public Set<Publication> getCitations() {
         return citations;
     }
 
+    /**
+     * Compare order: Author 1 -> Author N -> Title -> year -> id
+     * @param other other publication
+     * @return compare result
+     */
     @Override
     public int compareTo(Publication other) {
         int n = 0;

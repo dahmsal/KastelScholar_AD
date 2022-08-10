@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Jaccard extends Command {
     private static final String PATTERN = "^jaccard";
     private final DatabaseProvider databaseProvider;
-    private final Parameter listKeywords1 = ScholarParameter.keywordParameter().useAsList().build();
+    private final Parameter listKeywords1 = ScholarParameter.keywordParameter().useAsList().hasSpaceDelimiter().build();
     private final Parameter listKeywords2 = ScholarParameter.keywordParameter().useAsList().build();
     private final List<Parameter> parameters;
 

@@ -13,18 +13,26 @@ import java.util.Dictionary;
 import java.util.List;
 
 /**
- *
+ * Command: add journal
+ * Add a new journal to the session
+ * @author uppyo
+ * @version 1.0
  */
 public class AddJournal extends Command {
     private static final String PATTERN = "^add journal";
     private final List<Parameter> parameters;
     private final DatabaseProvider databaseProvider;
     private final Parameter name = ScholarParameter.stringParameter().build();
-    private final Parameter publisher = ScholarParameter.stringParameter().build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AddJournal(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
-        this.parameters = List.of(this.name, this.publisher);
+        // publisher has no relevance in the database
+        Parameter publisher = ScholarParameter.stringParameter().build();
+        this.parameters = List.of(this.name, publisher);
     }
 
 
@@ -33,10 +41,6 @@ public class AddJournal extends Command {
         return PATTERN;
     }
 
-    /**
-     * The quit-command has no parameters
-     * @return empty list
-     */
     @Override
     public List<Parameter> getParams() {
         return this.parameters;
@@ -45,8 +49,7 @@ public class AddJournal extends Command {
     @Override
     public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
         String journalName = (String) parameterDict.get(this.name).get(0);
-        String journalPublisher = (String) parameterDict.get(this.publisher).get(0);
-        Journal newJournal = new Journal(journalName, journalPublisher);
+        Journal newJournal = new Journal(journalName);
         try {
             this.databaseProvider.getVenueDatabase().addVenue(newJournal);
         } catch (IdentifierException e) {

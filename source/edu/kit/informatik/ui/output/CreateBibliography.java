@@ -41,7 +41,9 @@ public class CreateBibliography {
             stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(UtilStrings.getComma()));
             //replace last comma with "and"
             int lastComma = stringBuilder.lastIndexOf(UtilStrings.getComma());
-            stringBuilder.replace(lastComma, lastComma + 1, UtilStrings.getWhitespace() + UtilStrings.getAnd());
+            if (lastComma > 0) {
+                stringBuilder.replace(lastComma, lastComma + 1, UtilStrings.getWhitespace() + UtilStrings.getAnd());
+            }
             return stringBuilder.toString().trim();
         }
         if (style.equals("apa")){
@@ -55,8 +57,10 @@ public class CreateBibliography {
             stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(UtilStrings.getComma()));
             //replace last comma with "&"
             int lastComma = stringBuilder.lastIndexOf(UtilStrings.getComma());
-            stringBuilder.replace(lastComma, lastComma + 1
-                    , UtilStrings.getWhitespace() + UtilStrings.getAndSymbol());
+            if (lastComma > 0) {
+                stringBuilder.replace(lastComma, lastComma + 1
+                        , UtilStrings.getWhitespace() + UtilStrings.getAndSymbol());
+            }
             return stringBuilder.toString().trim();
         }
         throw new IdentifierException("style could not be found in author list creator");
@@ -89,6 +93,7 @@ public class CreateBibliography {
                 stringBuilder.append(UtilStrings.getDot()).append(UtilStrings.getWhitespace());
                 stringBuilder.append(publication.getVenue().getName()).append(UtilStrings.getDot());
             }
+            stringBuilder.append(UtilStrings.getLinebreak());
             bibID++;
         }
         return stringBuilder.toString();
@@ -109,6 +114,7 @@ public class CreateBibliography {
                 stringBuilder.append(((Series) publication.getVenue()).getLocation(publication.getYear()));
             }
             stringBuilder.append(UtilStrings.getDot());
+            stringBuilder.append(UtilStrings.getLinebreak());
         }
         return stringBuilder.toString();
     }

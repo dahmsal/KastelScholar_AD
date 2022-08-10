@@ -7,14 +7,16 @@ import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
-import edu.kit.informatik.ui.session.Session;
 import edu.kit.informatik.util.exception.IdentifierException;
 
 import java.util.Dictionary;
 import java.util.List;
 
 /**
- *
+ * Command: add conference
+ * Add a new conference to a existing series
+ * @author uppyo
+ * @version 1.0
  */
 public class AddConference extends Command {
     private static final String PATTERN = "^add conference";
@@ -24,6 +26,10 @@ public class AddConference extends Command {
     private final Parameter year = ScholarParameter.intParameter().build();
     private final Parameter location = ScholarParameter.stringParameter().build();
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public AddConference(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.series, this.year, this.location);
@@ -34,10 +40,7 @@ public class AddConference extends Command {
         return PATTERN;
     }
 
-    /**
-     * The quit-command has no parameters
-     * @return empty list
-     */
+
     @Override
     public List<Parameter> getParams() {
         return this.parameters;
