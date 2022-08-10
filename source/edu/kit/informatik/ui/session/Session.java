@@ -1,6 +1,7 @@
 package edu.kit.informatik.ui.session;
 
 import edu.kit.informatik.data.DatabaseProvider;
+import edu.kit.informatik.ui.commands.subscriber.QueryCommands;
 import edu.kit.informatik.ui.parser.CommandParser;
 import edu.kit.informatik.ui.parser.ParameterParser;
 import edu.kit.informatik.ui.commands.Command;
@@ -26,7 +27,9 @@ public class Session {
         this.running = true;
         this.databaseProvider = new DatabaseProvider();
         InputCommands inputCommands = new InputCommands(this, databaseProvider);
+        QueryCommands queryCommands = new QueryCommands(this.databaseProvider);
         this.commandList.addAll(inputCommands.subscribeToAll());
+        this.commandList.addAll(queryCommands.subscribeToAll());
     }
 
     public void runSession() {

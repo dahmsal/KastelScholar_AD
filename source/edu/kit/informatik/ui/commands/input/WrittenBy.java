@@ -9,7 +9,6 @@ import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
-import edu.kit.informatik.ui.session.Session;
 import edu.kit.informatik.util.exception.IdentifierException;
 
 import java.security.InvalidParameterException;
@@ -25,13 +24,11 @@ public class WrittenBy extends Command {
 
     private static final String PATTERN = "^written by";
     private final List<Parameter> parameters;
-    private final Session session;
     private final DatabaseProvider databaseProvider;
     private final Parameter id = ScholarParameter.idParameter().build();
     private final Parameter listAuthor = ScholarParameter.nameParameter().useAsList().build();
 
-    public WrittenBy(final Session session, final DatabaseProvider databaseProvider) {
-        this.session = session;
+    public WrittenBy(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(id, listAuthor);
     }

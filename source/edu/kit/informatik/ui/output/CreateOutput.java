@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import edu.kit.informatik.util.strings.UtilStrings;
 
-public class CreateListOutput {
+public class CreateOutput {
 
-    public static String getListOutput(ArrayList<String> outputElements) {
+    public static String getListOutput(List<String> outputElements) {
         if (outputElements.isEmpty()) {
             return UtilStrings.getEmptyString();
         }
@@ -23,5 +23,9 @@ public class CreateListOutput {
         int trailingLinebreak = stringBuilder.lastIndexOf(UtilStrings.getLinebreak());
         stringBuilder.deleteCharAt(trailingLinebreak);
         return stringBuilder.toString();
+    }
+
+    public static String getCutFloat(float value) {
+        return String.format("%.3f", value);
     }
 }

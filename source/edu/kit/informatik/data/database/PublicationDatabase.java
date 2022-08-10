@@ -2,11 +2,11 @@ package edu.kit.informatik.data.database;
 
 import edu.kit.informatik.data.objects.Author;
 import edu.kit.informatik.data.objects.Publication;
+import edu.kit.informatik.data.objects.venue.Series;
+import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.util.exception.IdentifierException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class PublicationDatabase {
     private final Database<Publication> database;
@@ -16,11 +16,23 @@ public class PublicationDatabase {
     }
 
     public void addPublication(Publication publication) throws IdentifierException {
+        // check if a fitting conference exists
+        if (publication.getVenue() instanceof Series) {
+            try {
+                ((Series) publication.getVenue()).getConference(publication.getYear());
+            } catch (IdentifierException e) {
+                throw new IdentifierException("no conference in the given year");
+            }
+        }
         this.database.addObject(publication);
     }
 
     public Publication getPublication(String id) throws IdentifierException {
         return this.database.findById(id);
+    }
+
+    public Collection<Publication> getAllPublications() {
+        return this.database.getValues();
     }
 
     public List<String> findInvalid() {
@@ -33,18 +45,28 @@ public class PublicationDatabase {
         return returnId;
     }
 
-
-    public List<String> findByAuthors(List<Author> authors) {
-        ArrayList<String> returnId = new ArrayList<>();
+    public Set<Publication> findByAuthors(List<Author> authors) {
+        Set<Publication> returnList = new HashSet<>();
         for (Publication publication: this.database.getValues()) {
-            for(Author author: authors) {
+            for (Author author: authors) {
                 if (publication.getAuthors().contains(author)) {
-                    returnId.add(publication.getId());
+                    returnList.add(publication);
                     break;
                 }
             }
         }
-        return returnId;
+        return returnList;
+    }
+
+    public Set<Author> findCoAuthors(Author author) {
+        Set<Author> resultsSet = new HashSet<>();
+        for (Publication publication: this.database.getValues()) {
+            if (publication.getAuthors().contains(author)) {
+                resultsSet.addAll(publication.getAuthors());
+            }
+        }
+        resultsSet.remove(author);
+        return resultsSet;
     }
 
     public List<String> findByKeywords(List<String> keywords) {
@@ -57,8 +79,26 @@ public class PublicationDatabase {
         return returnId;
     }
 
-    public Collection<Publication> getAllPublications() {
-        return this.database.getValues();
+    public List<Publication> findByVenue(Venue venue) {
+        List<Publication> publicationList = new ArrayList<>();
+        for (Publication publication: this.database.getValues()
+             ) {
+            if (publication.getVenue().equals(venue)) {
+                publicationList.add(publication);
+            }
+        }
+        return publicationList;
     }
+
+    public int numberOfCitations(Publication givenPub) {
+        int citationCount = 0;
+        for (Publication publication:this.database.getValues()) {
+            if (publication.getCitations().contains(givenPub)) {
+                citationCount++;
+            }
+        }
+        return citationCount;
+    }
+
 
 }

@@ -8,7 +8,6 @@ import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
-import edu.kit.informatik.ui.session.Session;
 import edu.kit.informatik.util.exception.IdentifierException;
 
 import java.security.InvalidParameterException;
@@ -21,13 +20,11 @@ import java.util.List;
 public class Cites extends Command {
     private static final String PATTERN = "^cites";
     private final List<Parameter> parameters;
-    private final Session session;
     private final DatabaseProvider databaseProvider;
     private final Parameter id1 = ScholarParameter.idParameter().build();
     private final Parameter id2 = ScholarParameter.idParameter().build();
 
-    public Cites(final Session session, final DatabaseProvider databaseProvider) {
-        this.session = session;
+    public Cites(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.id1, this.id2);
     }

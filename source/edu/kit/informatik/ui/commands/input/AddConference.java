@@ -5,7 +5,6 @@ import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.venue.Series;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
@@ -20,14 +19,12 @@ import java.util.List;
 public class AddConference extends Command {
     private static final String PATTERN = "^add conference";
     private final List<Parameter> parameters;
-    private final Session session;
     private final DatabaseProvider databaseProvider;
     private final Parameter series = ScholarParameter.stringParameter().build();
     private final Parameter year = ScholarParameter.intParameter().build();
     private final Parameter location = ScholarParameter.stringParameter().build();
 
-    public AddConference(final Session session, final DatabaseProvider databaseProvider) {
-        this.session = session;
+    public AddConference(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.series, this.year, this.location);
     }

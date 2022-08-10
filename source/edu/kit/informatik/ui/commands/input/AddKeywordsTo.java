@@ -7,14 +7,11 @@ import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
-import edu.kit.informatik.ui.session.Session;
 import edu.kit.informatik.ui.parser.UtilParser;
 import edu.kit.informatik.util.exception.IdentifierException;
 
-import java.sql.ResultSet;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
@@ -26,15 +23,13 @@ import java.util.Set;
 public class AddKeywordsTo extends Command {
     private static final String PATTERN = "^add keywords to";
     private final List<Parameter> parameters;
-    private final Session session;
     private final DatabaseProvider databaseProvider;
     private final Parameter listKeywords = ScholarParameter.keywordParameter().useAsList().build();
     private final Parameter idOrVenue = ScholarParameter.stringParameter().
             useAsField(List.of(this.listKeywords)).build();
     private final Parameter id = ScholarParameter.idParameter().build();
 
-    public AddKeywordsTo(final Session session, final DatabaseProvider databaseProvider) {
-        this.session = session;
+    public AddKeywordsTo(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.idOrVenue);
     }

@@ -4,12 +4,10 @@ import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.venue.Journal;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
-import edu.kit.informatik.ui.session.Session;
 import edu.kit.informatik.util.exception.IdentifierException;
-import edu.kit.informatik.util.exception.InputException;
+
 
 import java.util.Dictionary;
 import java.util.List;
@@ -20,13 +18,11 @@ import java.util.List;
 public class AddJournal extends Command {
     private static final String PATTERN = "^add journal";
     private final List<Parameter> parameters;
-    private final Session session;
     private final DatabaseProvider databaseProvider;
     private final Parameter name = ScholarParameter.stringParameter().build();
     private final Parameter publisher = ScholarParameter.stringParameter().build();
 
-    public AddJournal(final Session session, final DatabaseProvider databaseProvider) {
-        this.session = session;
+    public AddJournal(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(this.name, this.publisher);
     }

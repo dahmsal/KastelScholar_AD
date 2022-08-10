@@ -2,6 +2,7 @@ package edu.kit.informatik.ui.commands.query;
 
 import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.Author;
+import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
@@ -12,13 +13,13 @@ import edu.kit.informatik.util.exception.IdentifierException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CoAuthorsOf extends Command {
-    private static final String PATTERN = "^coauthors of";
+public class ForeignCitationsOf extends Command {
+    private static final String PATTERN = "^foreign citations of";
     private final DatabaseProvider databaseProvider;
     private final Parameter author = ScholarParameter.nameParameter().build();
     private final List<Parameter> parameters;
 
-    public CoAuthorsOf(final DatabaseProvider databaseProvider) {
+    public ForeignCitationsOf(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(author);
     }
@@ -35,19 +36,27 @@ public class CoAuthorsOf extends Command {
 
     @Override
     public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
-        String nameString = (String) parameterDict.get(this.author).get(0);
         Author givenAuthor;
+        String authorName = (String) parameterDict.get(author).get(0);
         try {
-            givenAuthor = databaseProvider.getAuthorDatabase().getAuthor(nameString);
+            givenAuthor = databaseProvider.getAuthorDatabase().getAuthor(authorName);
         } catch (IdentifierException e) {
             return new Result(false, e.getMessage());
         }
-        Set<Author> resultsSet = databaseProvider.getPublicationDatabase().findCoAuthors(givenAuthor);
-        if (resultsSet.isEmpty()) {
+        Set<Author> coAuthors = databaseProvider.getPublicationDatabase().findCoAuthors(givenAuthor);
+        coAuthors.add(givenAuthor);
+        Set<Publication> resultSet = new HashSet<>();
+        for (Publication publication:databaseProvider.getPublicationDatabase().findByAuthors(List.of(givenAuthor))) {
+            for (Publication citation: publication.getCitations()) {
+                if (citation.getAuthors().stream().noneMatch(coAuthors::contains) && citation.isValid()) {
+                    resultSet.add(citation);
+                }
+            }
+        }
+        if (resultSet.isEmpty()) {
             return new Result(true);
         }
-        resultsSet.remove(givenAuthor);
-        List<String> resultNames = resultsSet.stream().map(Author::getId).collect(Collectors.toList());
-        return new Result(true, CreateOutput.getListOutput(resultNames));
+        List<String> resultIDs = resultSet.stream().map(Publication::getId).collect(Collectors.toList());
+        return new Result(true, CreateOutput.getListOutput(resultIDs));
     }
 }

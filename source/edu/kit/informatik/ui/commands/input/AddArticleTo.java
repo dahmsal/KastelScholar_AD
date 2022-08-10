@@ -1,12 +1,10 @@
 package edu.kit.informatik.ui.commands.input;
 
 import edu.kit.informatik.data.DatabaseProvider;
-import edu.kit.informatik.data.database.PublicationDatabase;
 import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.commands.parameter.ParameterPattern;
 import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.ui.session.Session;
@@ -21,7 +19,6 @@ import java.util.List;
 public class AddArticleTo extends Command {
     private static final String PATTERN = "^add article to";
     private final List<Parameter> parameters;
-    private final Session session;
     private final DatabaseProvider databaseProvider;
     private final Parameter id = ScholarParameter.idParameter().build();
     private final Parameter year = ScholarParameter.intParameter().build();
@@ -29,8 +26,7 @@ public class AddArticleTo extends Command {
     private final Parameter venue = ScholarParameter.venueParameter()
             .useAsField(List.of(id, year, title)).build();
 
-    public AddArticleTo(final Session session, final DatabaseProvider databaseProvider) {
-        this.session = session;
+    public AddArticleTo(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(venue);
     }

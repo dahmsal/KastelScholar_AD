@@ -28,4 +28,8 @@ public class ScholarParameter {
         return new Parameter.ParameterBuilder().
                 specialPattern("((\\bseries\\b)|(\\bjournal\\b))+ [a-zA-Z\\d\\s]+");
     }
+
+    public static Parameter.ParameterBuilder bibStyleParameter() {
+        return new Parameter.ParameterBuilder().specialPattern("((\\bacm\\b)|(\\bapa\\b))");
+    }
 }

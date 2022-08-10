@@ -4,7 +4,7 @@ import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.ui.commands.parameter.Parameter;
-import edu.kit.informatik.ui.output.CreateListOutput;
+import edu.kit.informatik.ui.output.CreateOutput;
 import edu.kit.informatik.ui.session.Result;
 
 import java.util.ArrayList;
@@ -32,11 +32,11 @@ public class AllPublications extends Command {
     }
 
     @Override
-    public Result exec(Dictionary<Parameter, List<Object>> parameters) {
+    public Result exec(Dictionary<Parameter, List<Object>> parameterDict) {
         ArrayList<String> publicationIdList = new ArrayList<>();
         for (Publication publication: this.databaseProvider.getPublicationDatabase().getAllPublications()) {
             publicationIdList.add(publication.getId());
         }
-        return new Result(true, CreateListOutput.getListOutput(publicationIdList));
+        return new Result(true, CreateOutput.getListOutput(publicationIdList));
     }
 }

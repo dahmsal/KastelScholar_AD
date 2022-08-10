@@ -53,6 +53,10 @@ public class Series extends Venue {
         throw new IdentifierException("conference doesnt exist");
     }
 
+    public String getLocation(int year) throws IdentifierException {
+        return getConference(year).location;
+    }
+
     private static final class Conference {
         private final int year;
         private final String location;
