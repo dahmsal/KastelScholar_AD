@@ -37,7 +37,7 @@ public class PublicationDatabase {
      */
     public void addPublication(Publication publication) throws IdentifierException {
         // check if a fitting conference exists
-        if (publication.getVenue() instanceof Series) {
+        if (publication.getVenue().getClass().equals(Series.class)) {
             try {
                 ((Series) publication.getVenue()).getConference(publication.getYear());
             } catch (IdentifierException e) {

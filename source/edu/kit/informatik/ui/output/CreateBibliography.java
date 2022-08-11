@@ -97,7 +97,7 @@ public final class CreateBibliography {
             stringBuilder.append(UtilStrings.getWhitespace());
             stringBuilder.append(getAuthorList(style, publication.getAuthors()));
             stringBuilder.append(UtilStrings.getDot()).append(UtilStrings.getWhitespace());
-            if (publication.getVenue() instanceof Series) {
+            if (publication.getVenue().getClass().equals(Series.class)) {
                 stringBuilder.append(publication.getTitle());
                 stringBuilder.append(UtilStrings.getDot()).append(UtilStrings.getWhitespace());
                 stringBuilder.append(PROCEEDINGS).append(UtilStrings.getWhitespace());
@@ -131,7 +131,7 @@ public final class CreateBibliography {
             stringBuilder.append(publication.getTitle()).append(UtilStrings.getDot());
             stringBuilder.append(UtilStrings.getWhitespace());
             stringBuilder.append(publication.getVenue().getName());
-            if (publication.getVenue() instanceof Series) {
+            if (publication.getVenue().getClass().equals(Series.class)) {
                 stringBuilder.append(UtilStrings.getComma());
                 stringBuilder.append(UtilStrings.getWhitespace());
                 stringBuilder.append(((Series) publication.getVenue()).getLocation(publication.getYear()));

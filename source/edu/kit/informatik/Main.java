@@ -10,7 +10,7 @@ import java.util.List;
  * KastelScholar is a literature management program. This was created as part of the final programming assigment for
  * the lecture "Programmieren" at KIT.
  * @author uppyo
- * @version 0.99
+ * @version 1.0
  */
 public final class Main {
 
