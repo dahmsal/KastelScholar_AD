@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
  * @author uppyo
  * @version 1.0
  */
-public class Math {
+public final class Math {
+
+    private Math() { }
 
     /**
      * Get the sum of all numbers of a list

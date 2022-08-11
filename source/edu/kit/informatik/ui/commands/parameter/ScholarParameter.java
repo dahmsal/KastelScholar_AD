@@ -7,7 +7,9 @@ import edu.kit.informatik.util.DataType;
  * @author uppyo
  * @version 1.0
  */
-public class ScholarParameter {
+public final class ScholarParameter {
+
+    private ScholarParameter() { }
 
     /**
      * A identifier-parameter: only lowercase and numbers

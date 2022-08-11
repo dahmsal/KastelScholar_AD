@@ -7,7 +7,12 @@ import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 /**
  * Explicit database for publications. Includes a collection of useful queries.

@@ -6,7 +6,7 @@ package edu.kit.informatik.util.strings;
  * @author uppyo
  * @version 1.0
  */
-public class UtilStrings {
+public final class UtilStrings {
     private static final String WHITESPACE = " ";
     private static final String LINEBREAK = "\n";
     private static final String EMPTYSTRING = "";
@@ -20,6 +20,8 @@ public class UtilStrings {
     private static final String SEMICOLON = ";";
     private static final String AND = "and";
     private static final String ANDSYMBOL = "&";
+
+    private UtilStrings() { }
 
     /**
      * pre-defined string element

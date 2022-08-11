@@ -4,7 +4,11 @@ import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 import edu.kit.informatik.util.strings.UtilStrings;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * A series where publications can be published in context of a conference.

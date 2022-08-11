@@ -1,7 +1,5 @@
 package edu.kit.informatik.ui.commands.input;
 
-
-
 import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.Publication;
 import edu.kit.informatik.data.objects.venue.Venue;

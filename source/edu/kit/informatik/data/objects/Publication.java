@@ -2,10 +2,16 @@ package edu.kit.informatik.data.objects;
 
 import edu.kit.informatik.data.objects.venue.Venue;
 import edu.kit.informatik.util.exception.ParameterException;
-import edu.kit.informatik.util.exception.messages.DataExceptionsMessage;
+import edu.kit.informatik.util.exception.messages.DataExceptionMessage;
 import edu.kit.informatik.util.exception.messages.DatabaseExceptionMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 
 /**
  * A scientific Publication, includes useful queries. A publication has to be linked to a venue but does not require an
@@ -121,13 +127,13 @@ public class Publication implements DataObject, Comparable<Publication> {
      */
     public void addCitation(Publication publication)  throws ParameterException {
         if (this.citations.contains(publication)) {
-            throw new ParameterException(DataExceptionsMessage.getCitationExists());
+            throw new ParameterException(DataExceptionMessage.getCitationExists());
         }
         if (this.equals(publication)) {
-            throw new ParameterException(DataExceptionsMessage.getCiteSelf());
+            throw new ParameterException(DataExceptionMessage.getCiteSelf());
         }
         if (publication.getYear() > this.year) {
-            throw new ParameterException(DataExceptionsMessage.getCiteNewer());
+            throw new ParameterException(DataExceptionMessage.getCiteNewer());
         }
         this.citations.add(publication);
     }

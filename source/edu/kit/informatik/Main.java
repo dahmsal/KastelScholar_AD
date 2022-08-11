@@ -12,7 +12,9 @@ import java.util.List;
  * @author uppyo
  * @version 0.99
  */
-public class Main {
+public final class Main {
+
+    private Main() { }
 
     /**
      * No inline args are used. Initialise Commands and Session and subscribe commands.

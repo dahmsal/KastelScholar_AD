@@ -6,7 +6,14 @@ import edu.kit.informatik.util.exception.InputException;
 import edu.kit.informatik.util.exception.messages.ParserExceptionMessage;
 import edu.kit.informatik.util.strings.UtilStrings;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -14,7 +21,9 @@ import java.util.regex.Pattern;
  * @author uppyo
  * @version 1.0
  */
-public class ParameterParser {
+public final class ParameterParser {
+
+    private ParameterParser() { }
 
     /**
      * Parse a list of parameters against user-inputs
@@ -77,10 +86,7 @@ public class ParameterParser {
             }
         } else if (parameter.getAlternativeParameters() != null) {
             for (Parameter altParam : parameter.getAlternativeParameters()) {
-                try {
-                    return parseParameter(inputToken, altParam);
-                } catch (InputException ignored) {
-                }
+                return parseParameter(inputToken, altParam);
             }
             throw new InputException(ParserExceptionMessage.getWrongFormat());
         } else {

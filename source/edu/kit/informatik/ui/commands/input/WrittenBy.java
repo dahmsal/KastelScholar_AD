@@ -1,7 +1,5 @@
 package edu.kit.informatik.ui.commands.input;
 
-
-
 import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.Author;
 import edu.kit.informatik.data.objects.Publication;
@@ -12,7 +10,10 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.exception.ParameterException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
+
 
 /**
  * Command: written by

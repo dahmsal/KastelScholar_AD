@@ -10,10 +10,11 @@ import edu.kit.informatik.util.strings.UtilStrings;
  * @author uppyo
  * @version 1.0
  */
-public class CreateOutput {
-
+public final class CreateOutput {
     private static final int CHAR_LENGTH = 5;
     private static final String CHAR_FORMAT = "%.4f";
+
+    private CreateOutput() { }
 
     /**
      * Create an ordered output for list of elements

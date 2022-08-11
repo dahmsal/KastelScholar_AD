@@ -3,7 +3,16 @@ package edu.kit.informatik.ui.commands.subscriber;
 
 import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.ui.commands.Command;
-import edu.kit.informatik.ui.commands.input.*;
+
+import edu.kit.informatik.ui.commands.input.AddArticleTo;
+import edu.kit.informatik.ui.commands.input.AddAuthor;
+import edu.kit.informatik.ui.commands.input.AddConference;
+import edu.kit.informatik.ui.commands.input.AddJournal;
+import edu.kit.informatik.ui.commands.input.AddKeywordsTo;
+import edu.kit.informatik.ui.commands.input.AddSeries;
+import edu.kit.informatik.ui.commands.input.Cites;
+import edu.kit.informatik.ui.commands.input.Quit;
+import edu.kit.informatik.ui.commands.input.WrittenBy;
 import edu.kit.informatik.ui.session.Session;
 
 import java.util.ArrayList;

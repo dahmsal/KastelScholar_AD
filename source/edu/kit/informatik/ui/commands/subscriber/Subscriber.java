@@ -14,6 +14,8 @@ import java.util.List;
 public interface Subscriber {
     /**
      * Subscribe all commands to the session
+     * @param session current session
+     * @param databaseProvider databases of the session
      * @return the list of commands which have been added
      */
     List<Command> subscribeAll(Session session, DatabaseProvider databaseProvider);

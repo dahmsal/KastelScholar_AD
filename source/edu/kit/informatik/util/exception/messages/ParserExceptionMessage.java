@@ -5,13 +5,15 @@ package edu.kit.informatik.util.exception.messages;
  * @author uppyo
  * @version 1.0
  */
-public class ParserExceptionMessage {
+public final class ParserExceptionMessage {
     private static final String NO_COMMAND = "not a valid command";
     private static final String NUMBER_OF_ARGS = "invalid number of args";
     private static final String NO_ARGS = "no arg provided";
     private static final String WRONG_FORMAT = "wrong parameter format";
     private static final String TYPECAST = "typecast unsuccessful";
     private static final String NO_LIST = "no list provided";
+
+    private ParserExceptionMessage() { }
 
     /**
      * Create exception-message

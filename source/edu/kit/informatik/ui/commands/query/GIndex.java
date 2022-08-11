@@ -11,7 +11,11 @@ import edu.kit.informatik.util.ObjectPair;
 import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.Math;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +30,10 @@ public class GIndex extends Command {
     private final Parameter author = ScholarParameter.nameParameter().build();
     private final List<Parameter> parameters;
 
+    /**
+     * Get the database provider of the session
+     * @param databaseProvider a provider of all databases
+     */
     public GIndex(final DatabaseProvider databaseProvider) {
         this.databaseProvider = databaseProvider;
         this.parameters = List.of(author);

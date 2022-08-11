@@ -7,7 +7,11 @@ import edu.kit.informatik.ui.output.CreateOutput;
 import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.Math;
 
-import java.util.*;
+import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 /**
  * Command: jaccard

@@ -7,7 +7,10 @@ import edu.kit.informatik.ui.commands.parameter.ScholarParameter;
 import edu.kit.informatik.ui.output.CreateOutput;
 import edu.kit.informatik.ui.session.Result;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
+
 
 /**
  * Command: find by keywords

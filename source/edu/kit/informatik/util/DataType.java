@@ -22,6 +22,10 @@ public enum DataType {
 
     private final Object typeObject;
 
+    /**
+     * Get the generic object
+     * @param typeObject generic object of desired type
+     */
     DataType(Object typeObject) {
         this.typeObject = typeObject;
     }

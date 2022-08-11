@@ -30,6 +30,10 @@ public enum ParameterPattern {
 
     private final String pattern;
 
+    /**
+     * Every enum entry has a associated parameter pattern
+     * @param pattern associated parameter pattern
+     */
     ParameterPattern(final String pattern) {
         this.pattern = pattern;
     }

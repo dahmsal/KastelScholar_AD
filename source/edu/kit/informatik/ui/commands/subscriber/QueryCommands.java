@@ -2,7 +2,18 @@ package edu.kit.informatik.ui.commands.subscriber;
 
 import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.ui.commands.Command;
-import edu.kit.informatik.ui.commands.query.*;
+
+import edu.kit.informatik.ui.commands.query.AllPublications;
+import edu.kit.informatik.ui.commands.query.CoAuthorsOf;
+import edu.kit.informatik.ui.commands.query.FindByKeywords;
+import edu.kit.informatik.ui.commands.query.ForeignCitationsOf;
+import edu.kit.informatik.ui.commands.query.GIndex;
+import edu.kit.informatik.ui.commands.query.InProceedings;
+import edu.kit.informatik.ui.commands.query.Jaccard;
+import edu.kit.informatik.ui.commands.query.ListInvalidPublications;
+import edu.kit.informatik.ui.commands.query.PrintBibliography;
+import edu.kit.informatik.ui.commands.query.PublicationsBy;
+import edu.kit.informatik.ui.commands.query.Similarity;
 import edu.kit.informatik.ui.session.Session;
 
 

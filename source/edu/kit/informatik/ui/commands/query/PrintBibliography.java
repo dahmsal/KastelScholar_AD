@@ -10,8 +10,11 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.exception.ParameterException;
 
+import java.util.Dictionary;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import java.util.*;
 
 /**
  * Command: print bibliography

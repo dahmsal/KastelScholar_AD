@@ -3,7 +3,6 @@ package edu.kit.informatik.ui.parser;
 import edu.kit.informatik.ui.commands.Command;
 import edu.kit.informatik.util.exception.InputException;
 import edu.kit.informatik.util.ObjectPair;
-import edu.kit.informatik.util.exception.messages.DataExceptionsMessage;
 import edu.kit.informatik.util.exception.messages.ParserExceptionMessage;
 import edu.kit.informatik.util.strings.UtilStrings;
 
@@ -16,7 +15,9 @@ import java.util.regex.Pattern;
  * @author uppyo
  * @version 1.0
  */
-public class CommandParser {
+public final class CommandParser {
+
+    private CommandParser() { }
 
     /**
      * Match input-command against all command-patterns

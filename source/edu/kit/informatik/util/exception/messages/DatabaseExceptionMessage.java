@@ -7,7 +7,7 @@ import edu.kit.informatik.util.strings.UtilStrings;
  * @author uppyo
  * @version 1.0
  */
-public class DatabaseExceptionMessage {
+public final class DatabaseExceptionMessage {
 
     private static final String AUTHOR = "Author: ";
     private static final String PUBLICATION = "Publication with id: ";
@@ -19,6 +19,8 @@ public class DatabaseExceptionMessage {
     private static final String WAS_SET = "was already added";
     private static final String CONFERENCE_MISSING = "no conference could be found in the year: ";
     private static final String CONFERENCE_DOUBLE = "conference with the same year already exists";
+
+    private DatabaseExceptionMessage() { }
 
     /**
      * Create exception-message

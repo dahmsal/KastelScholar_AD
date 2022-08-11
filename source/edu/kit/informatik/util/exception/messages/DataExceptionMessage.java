@@ -5,11 +5,13 @@ package edu.kit.informatik.util.exception.messages;
  * @author uppyo
  * @version 1.0
  */
-public class DataExceptionsMessage {
+public final class DataExceptionMessage {
 
     private static final String CITATION_EXISTS = "citation already exists";
     private static final String CITE_SELF = "a publication cannot cite itself";
     private static final String CITE_NEWER = "a citation must be older than the publication";
+
+    private DataExceptionMessage() { }
 
     /**
      * Create exception-message

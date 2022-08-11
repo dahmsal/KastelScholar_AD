@@ -11,7 +11,11 @@ import edu.kit.informatik.ui.session.Result;
 import edu.kit.informatik.util.exception.IdentifierException;
 import edu.kit.informatik.util.strings.UtilStrings;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

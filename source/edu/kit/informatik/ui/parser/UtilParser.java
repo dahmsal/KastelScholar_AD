@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
  * @author uppyo
  * @version 1.0
  */
-public class UtilParser {
+public final class UtilParser {
+
+    private UtilParser() { }
 
     /**
      * Check if a input matches a given parameter

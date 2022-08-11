@@ -16,10 +16,12 @@ import java.util.stream.Collectors;
  * @author uppyo
  * @version 1.0
  */
-public class CreateBibliography {
+public final class CreateBibliography {
     private static final String PROCEEDINGS = "In Proceedings of";
     private static final String STYLE_BIB = "bib style could not be found";
     private static final String STYLE_AUTHOR = "style could not be found in author list creator";
+
+    private CreateBibliography() { }
 
     /**
      * Create the bibliography output
@@ -115,6 +117,7 @@ public class CreateBibliography {
             stringBuilder.append(UtilStrings.getLinebreak());
             bibID++;
         }
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(UtilStrings.getLinebreak()));
         return stringBuilder.toString();
     }
 
@@ -136,6 +139,7 @@ public class CreateBibliography {
             stringBuilder.append(UtilStrings.getDot());
             stringBuilder.append(UtilStrings.getLinebreak());
         }
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(UtilStrings.getLinebreak()));
         return stringBuilder.toString();
     }
 

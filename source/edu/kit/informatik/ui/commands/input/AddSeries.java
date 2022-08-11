@@ -1,6 +1,5 @@
 package edu.kit.informatik.ui.commands.input;
 
-
 import edu.kit.informatik.data.DatabaseProvider;
 import edu.kit.informatik.data.objects.venue.Series;
 import edu.kit.informatik.ui.commands.Command;
